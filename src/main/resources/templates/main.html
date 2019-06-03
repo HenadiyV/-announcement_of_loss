@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <form action="/user/add"  method="post" >
+        <input type="text" name="name" placeholder="Add name user"/>
+        <input type="text" name="email" placeholder="Add email user"/>
+        <button type="submit">Add</button>
+    </form>
+</div>
+<div>
+    <form  action="/user/filter" method="post">
+        <input type="text" name="filter" />
+        <button type="submit">Filter</button>
+    </form>
+</div>
+<h1>User list</h1>
+<div >
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+        <tr th:each="user : ${listName}">
+            <td th:text="${user.getId()}"/>
+            <td th:text="${user.getName()}"/>
+            <td th:text="${user.getEmail()}"/>
+        </tr>
+    </table>
+</div>
+<a href="/user/list" >List</a>
+
+
+</body>
+</html>

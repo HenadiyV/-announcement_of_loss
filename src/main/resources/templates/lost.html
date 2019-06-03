@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+          crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+
+    <script src="/js/jquery-3.4.1.js"></script>
+</head>
+
+<body>
+<section class="header_sect mt-2">
+    <!-- heder -->
+    <div class="container">
+        <nav class="navbar-expand-lg navbar navbar-dark bg-primary">
+            <a class="navbar-brand" href="main_page.html">Головна</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+                    aria-controls="navbarColor02"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <div class="navbar-nav mr-auto"></div>
+                <form class="form-inline">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Що шукаемо ?... "
+                           aria-label="Search">
+                    <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Пошук</button>
+                </form>
+            </div>
+        </nav>
+
+    </div>
+
+</section>
+<!-- //heder -->
+
+<section class="header_sect mt-2">
+    <!-- города container-expand-lg-->
+
+    <div class="container ">
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <div class="input-group ">
+                    <select class="custom-select" id="inputGroupSelect01" aria-label="Example select with button addon">
+                        <option selected>Виберіть місто...</option>
+                        <option value="1">Хмельницький</option>
+                        <option value="2">Тернопіль</option>
+                        <option value="3">Львів</option>
+                        <option value="3">Київ</option>
+                        <option value="1">Хмельницький</option>
+                        <option value="2">Тернопіль</option>
+                        <option value="3">Львів</option>
+                        <option value="3">Київ</option>
+                        <option value="1">Хмельницький</option>
+                        <option value="2">Тернопіль</option>
+                        <option value="3">Львів</option>
+                        <option value="3">Київ</option>
+                        <option value="1">Хмельницький</option>
+                        <option value="2">Тернопіль</option>
+                        <option value="3">Львів</option>
+                        <option value="3">Київ</option>
+                    </select>
+
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">Показати</button>
+                    </div>
+                </div><!-- //города -->
+            </div>
+            <div class=" col-sm-6 col-md-6 col-md-offset-1">
+                <div class="input-group"><!-- категория -->
+                    <select class="custom-select" id="inputGroupSelect02" aria-label="Example select with button addon">
+                        <option selected>Виберіть категорию...</option>
+                        <option value="1">Документи</option>
+                        <option value="2">Тварини</option>
+                        <option value="3">Ключі</option>
+                        <option value="4">Галантерея</option>
+                        <option value="5">Інше</option>
+                </div>
+                </select>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button">Показати</button>
+                </div>
+            </div><!-- //категория -->
+        </div>
+    </div>
+</section>
+
+
+<div class="col-12 mt-10" style="height:auto;">
+    <!-- Добавить объявление -->
+    <div class="row">
+
+        <div class="col-4 m-2">
+
+        </div>
+        <div class="col-sm-6 col-md-6 m-2">
+            <button type="button" class="btn btn-danger">Повідомити про втрату</button>
+        </div>
+
+
+    </div>
+</div>
+<!-- //Добавить объявление -->
+
+
+<section>
+    <div><!-- карточки -->
+        <table>
+            <tbody>
+            <tr th:each="adver : ${listAdver}">
+                <td th:text="${adver}">1</td>
+
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div><!-- //карточки -->
+
+
+</section>
+
+<script src="js/bootstrap.min.js"></script>
+
+<script src="/js/main.js"></script>
+</body>
+
+</html>

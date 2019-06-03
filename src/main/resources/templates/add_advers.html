@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ADD</title>
+</head>
+<body>
+<h2>Hello ADD</h2>
+
+<section>
+    <div class="conteiner">
+        <div class="row">
+            <div class="col-1 col-sm-hidden col-md-hidden"></div> <!-- -->
+            <div class="col-8 col-sm-2 col-md-2 p-1 ">
+                <form action="/advers/add_advers" method="post" >
+
+                    <!--<div class=" col-sm-6 col-md-6 col-md-offset-1 "th:object="city">-->
+                    <!--<select  >-->
+                        <!--<option value="">Виберіть місто</option>-->
+
+                        <!--<option  th:each="city : ${cityList}"-->
+                                 <!--th:value="${city.id}"-->
+                                 <!--th:text="${city.name}"></option>-->
+                    <!--</select>-->
+                    <!--</div><br/>-->
+                        <div class=" col-sm-6 col-md-6 col-md-offset-1">
+                    <select class="form-control" th:object="${category1}" id="testOrder" name="testOrder">
+                        <option value="">Виберіть категорію</option>
+
+
+
+                        <option th:each="category : ${categoryList}" th:value="${category.id}" th:text="${category.name}"></option>
+
+                    </select>
+                    </div><br/>
+
+                    <div class=" col-sm-6 col-md-6 col-md-offset-1">
+                    <textarea cols="32" rows="3" name="textAdver" placeholder="Текст оголошення"></textarea>
+                    </div><br/>
+                    <div class=" col-sm-6 col-md-6 col-md-offset-1">
+                        <span>Дата завершення дії оголошення</span><br/>
+                    <input type="date" name="dateStop"/>
+                    <input type="date" name="user" hidden="hidden"/>
+            </div><br/>
+                    <div class=" col-sm-6 col-md-6 col-md-offset-1">
+                        <span>Додати зображення</span><br/>
+
+                    <input type="file" name="photo"/>
+                    <div>
+                     </div><br/>
+                    </div>
+                    <button type="submit" value="submit">Submit</button>
+                </form>
+            </div>
+            <div class="col-1"></div>  <!---->
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

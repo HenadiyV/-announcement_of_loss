@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List User</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+    </tr>
+    <tr th:each="prod : ${listUser}">
+        <td th:text="${prod.getId()}"/>
+        <td th:text="${prod.getName()}"/>
+        <td th:text="${prod.getEmail()}"/>
+    </tr>
+</table>
+
+</body>
+</html>
