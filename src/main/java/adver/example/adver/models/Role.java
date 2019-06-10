@@ -15,7 +15,7 @@ import java.util.Set;
 /*
 *@autor Hennadiy Voroboiv
 28.05.2019
-6:32
+
 */
 @Entity
 public class Role {

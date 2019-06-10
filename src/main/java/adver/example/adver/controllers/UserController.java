@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /*
@@ -54,9 +55,11 @@ public class UserController {
 
     @PostMapping("filter")
     public String filtr(@RequestParam String filter, Map<String, Object> model) {
-        Iterable<User> listName;
+        Iterable<User> listName=new ArrayList<>();
         if (filter != null && !filter.isEmpty()) {
-            listName = userRepository.findByName(filter);
+            User us =userRepository.findByName(filter);;
+
+            ((ArrayList<User>) listName).add(us);
         } else {
             listName = userRepository.findAll();
         }

@@ -1,10 +1,12 @@
 package adver.example.adver.repos;
 
 import adver.example.adver.models.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface UserRepository extends CrudRepository<User, Integer> {
-    List<User> findByName(String name);
+public interface UserRepository extends JpaRepository<User, Integer> {
+    User findByName(String name);
+    User findByEmail(String email);
 }

@@ -5,14 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
-          crossorigin="anonymous">
-    <link rel="stylesheet" href="css/my.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
 
-    <script src="../resources/js/jquery-3.4.1.js"></script>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-reboot.css">
+    <script src="/static/css/js/jquery-3.4.1.js"></script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+          crossorigin="anonymous">
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>-->
     <style>
         [class*="col-"] {
             /* background-color: #eee; */
@@ -29,29 +31,33 @@
     <div class="container">
         <nav class="navbar-expand-lg navbar navbar-dark bg-primary">
             <!-- <a class="navbar-brand" href="main_page.html">Головна</a>-->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
-                    aria-controls="navbarColor02"
+            <a class="navbar-brand" href="/advers/hound">Знайденно</a>
+            <a class="navbar-brand" href="/advers/lost">Втрачено</a>
+            <a class="navbar-brand" href="/user">Особистий кабінет</a>
+            <!--<a class="navbar-brand" href="#">Зворотній звязок</a>-->
+            <!--<a class="navbar-brand" href="#">Про нас</a>-->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarColor03">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/advers/hound">Знайденно</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/advers/lost">Втрачено</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Зворотній звязок</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Про нас</a>
-                    </li>
-                </ul>
+            <!--<div class="collapse navbar-collapse" id="navbarColor03">-->
+                <!--<ul class="navbar-nav mr-auto">-->
+                    <!--<li class="nav-item">-->
+                        <!--<a class="nav-link" href="/advers/hound">Знайденно</a>-->
+                    <!--</li>-->
+                    <!--<li class="nav-item">-->
+                        <!--<a class="nav-link" href="/advers/lost">Втрачено</a>-->
+                    <!--</li>-->
+                    <!--<li class="nav-item">-->
+                        <!--<a class="nav-link" href="#">Зворотній звязок</a>-->
+                    <!--</li>-->
+                    <!--<li class="nav-item">-->
+                        <!--<a class="nav-link" href="#">Про нас</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
 
-            </div>
+            <!--</div>-->
         </nav>
 
     </div>
@@ -60,34 +66,39 @@
 
 <section>
     <div class="col-sm-12 col-md-12">
-        <h2>Привіт </h2></div>
+        <h2 >Привіт </h2></div>
     <div class="col-sm-12 col-md-12">
-        <h3>Ми раді вітати Вас на нашому сайті.</h3>
+        <h3 >Ми раді вітати Вас на нашому сайті.</h3>
         <h6>На нашому ресурсі користувачі залишають повідомлення про знайденны або втраченны речі.</h6></div>
     <div class="col-12 mt-10" style="height: auto;">
         <!-- Добавить объявление -->
         <div class="row">
 
             <div class="col-sm-4 col-md-4  m-3">
-                <button type="button" class="btn btn-danger">Повідомити про втрату</button>
+                <form action="/advers/add_advers"  method="get">
+                    <!--<input hidden="hidden" type="text" name="stat" value="1">-->
+                    <button class="btn btn-danger"  type="submit" href="/advers/add_advers" >Повідомити про  втрату </button>
+                </form>
+
 
             </div>
             <div class="col-sm-2 col-md-2 m-3 hidden-xs"></div>
             <div class="col-sm-4 col-md-4   m-3">
-
-                <button type="button" class="btn btn-success">Повідомити про знахідку</button>
+                <form action="/advers/add_advers"  method="get">
+                    <!--<input hidden="hidden" type="text" name="stat" value="2">-->
+                    <button class="btn btn-success"  type="submit" href="/advers/add_advers" >Повідомити про знахідку </button>
+                </form>
             </div>
 
 
         </div>
     </div>
     <div class="col-sm-12 col-md-12">
-        <h6>Сподіваємось скоритавшись допомогою відвідувачів нашого сайту Вы швидко знайдете загублене, або допоможете
-            комусь знайти. </h6></div>
+        <h6>Сподіваємось скоритавшись допомогою відвідувачів нашого сайту Вы швидко знайдете загублене, або допоможете комусь знайти втрачене. </h6></div>
 
 </section>
-<footer class="footer"> Footer</footer>
-<script src="../resources/js/main.js"></script>
-<script src="../resources/js/bootstrap.min.js"></script>
+<!--<footer class="footer"> Footer </footer>-->
+<script src="/static/css/js/main.js"></script>
+<script src="/static/css/js/bootstrap.min.js"></script>
 </body>
 </html>

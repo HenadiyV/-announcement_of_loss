@@ -1,6 +1,11 @@
 package adver.example.adver.models;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 
@@ -10,26 +15,43 @@ import java.util.Set;
 16:01
 */
 @Entity // This tells Hibernate to make a table out of this class
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name="name", nullable = false)
+
+    @NotEmpty(message= "Заповніть поле имя.")
     private String name;
     @Column(name="email", nullable = false)
+    @NotEmpty(message="Заповніть поле email.")
     private String email;
     @Column(name="password", nullable = false)
+    @NotEmpty(message="Заповніть поле пароль.")
     private String password;
     @Column(name="phohe")
     private String phone;
-
 
     @OneToMany(mappedBy="user",targetEntity=Adver.class,cascade = CascadeType.ALL)
     private Set<Adver> advers;
 
     @ManyToOne
     private Role role;
+    //===================================
+    @ElementCollection(targetClass = Rl.class,fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role",joinColumns =@JoinColumn(name="user_id") )
+    @Enumerated(EnumType.STRING)
+    private Set<Rl> rls;
 
+    public Set<Rl> getRls() {
+        return rls;
+    }
+
+    public void setRls(Set<Rl> rls) {
+        this.rls = rls;
+    }
+
+    //================================
     /**
      * Default constructor
      */
@@ -53,8 +75,38 @@ public class User {
         this.email = email;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRls();
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return name;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setPassword(String password) {
