@@ -5,8 +5,8 @@ import adver.example.adver.repos.AdverRepository;
 import adver.example.adver.repos.CategoryRepository;
 import adver.example.adver.repos.CityRepository;
 import adver.example.adver.repos.StatusRepository;
-import adver.example.adver.view.CityCategory;
-import adver.example.adver.view.MessageUser;
+import adver.example.adver.dto.CityCategoryDTO;
+import adver.example.adver.dto.MessageUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -201,7 +201,7 @@ if(result){Adver adv=new Adver(adver.getTextAdver(),photo,startDate,dataStop,adv
     }
 
     @GetMapping("/lost")
-    public String MyLost(CityCategory cityCategory, Map<String, Object> model) {
+    public String MyLost(CityCategoryDTO cityCategoryDTO, Map<String, Object> model) {
 
         Iterable<Category> categoryList = categoryRepository.findAll();
         model.put("categoryList", categoryList);
@@ -250,7 +250,7 @@ public String UserMessage(){
 }
     @PostMapping ("/message")
     public String UserMessage(@AuthenticationPrincipal User user,
-                              @Valid MessageUser mess, BindingResult bindingResult,  @RequestParam("user")User userM, @RequestParam("textMessage") String str, Model model){
+                              @Valid MessageUserDTO mess, BindingResult bindingResult, @RequestParam("user")User userM, @RequestParam("textMessage") String str, Model model){
         if(bindingResult.hasErrors()) {
             Map<String, String> errorMap = UtilsController.getErrors(bindingResult);
             model.mergeAttributes(errorMap);
