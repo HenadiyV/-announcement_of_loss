@@ -160,18 +160,12 @@
                                 <img class="card-img-top"  th:src="@{'/img/'+${adver1.getPhoto()}}" alt="Card image cap"/>
 
                         </div>
-                        <a href="/advers/message" class="btn btn-primary">Повідомити</a>
+                        <form action="/advers/message" method="post">
+                            <!--<button class="btn btn-primary">Повідомити</button>-->
+                            <button class="btn-info" type="submit" id="submit" value="submit" >Повідомити</button>
+                        </form>
                     </div>
-                    <!--<div th:if="${adver.getPhoto()}">-->
-                        <!--<div style="width: 150px;height: 150px  ">-->
-                        <!--<img class="card-img-top"  th:src="@{'/img/'+${adver.getPhoto()}}" alt="Card image cap"/></div>-->
-                <!--</div>-->
-                    <!--<div class="card-body">-->
 
-                        <!--<p class="card-text" th:text="${adver.getTextAdver()}"></p>-->
-                        <!--<a href="/advers/message" class="btn btn-primary">Go somewhere</a>-->
-                    <!--</div>-->
-                <!--</div>-->
             </div>
 
         </div><!-- //карточки -->
