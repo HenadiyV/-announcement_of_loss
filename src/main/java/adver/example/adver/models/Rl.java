@@ -8,7 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
  *09.06.2019
  */
 public enum Rl implements GrantedAuthority {
-    USER,ADMIN;
+    USER, ADMIN;
 
     @Override
     public String getAuthority() {

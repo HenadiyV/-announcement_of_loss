@@ -7,6 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface RoleRepository extends CrudRepository<Role, Integer> {
-    //добавил коммит
-    List<Role> findByAll();
+
 }

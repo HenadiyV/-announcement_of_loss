@@ -1,5 +1,6 @@
 package adver.example.adver.controllers;
 
+import adver.example.adver.models.Rl;
 import adver.example.adver.models.User;
 import adver.example.adver.repos.UserRepository;
 import adver.example.adver.service.UserService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.Map;
 
 /*
@@ -43,14 +45,14 @@ model.mergeAttributes(errorMap);
             return "registration";
         }
 
-//        User userDB=userRepository.findByEmail(user.getEmail());
+   //  User userDB=userRepository.findByEmail(user.getEmail());
 if(!userService.addUser(user)) {
     model.addAttribute("nameError", "User exists");
     return "registration";
 }
 //user.setRls(Collections.singleton(Rl.USER));
 //userRepository.save(user);
-return "Ok!";//"redirect:/login"
+return "redirect:/login";//
         }
 
 

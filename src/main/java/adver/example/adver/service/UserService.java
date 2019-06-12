@@ -1,6 +1,7 @@
 package adver.example.adver.service;
 
 
+import adver.example.adver.models.Rl;
 import adver.example.adver.models.Role;
 import adver.example.adver.models.User;
 import adver.example.adver.repos.UserRepository;
@@ -31,6 +32,7 @@ public class UserService implements UserDetailsService {
         if (userFromDb != null) {
             return false;
         }
+        user.setRls(Collections.singleton(Rl.USER));
 Role rl=new Role();
 rl.setId(2);
 rl.setName("user");

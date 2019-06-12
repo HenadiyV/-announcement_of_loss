@@ -14,6 +14,6 @@ public interface AdverRepository extends CrudRepository<Adver, Integer> {
     List<Adver> findByCity_IdAndCategory_IdAndStatus_Id(int city,int category,int id);
     Page<Adver> findByCity_IdAndStatus_Id(int city, int id,Pageable pageable);
     Page<Adver> findByCategory_IdAndStatus_Id(int category,int id,Pageable pageable);
-    Page<Adver> findByAll(  Pageable pageable);
+
 
 }

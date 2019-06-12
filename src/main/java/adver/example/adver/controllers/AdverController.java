@@ -37,11 +37,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/advers")
 public class AdverController {
-    //    private Validator validator;
-//    public AdverController(){
-//        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-//        validator = validatorFactory.getValidator();
-//    }
+
     @Value("${upload.path}")
     private String uploadPath;
     @Autowired
