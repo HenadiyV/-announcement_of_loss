@@ -29,42 +29,42 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin_category/category")
 public class CategoryController {
-    final CategoryRepository categoryRepo;
+   // final CategoryRepository categoryRepo;
 
-    @Autowired
-    public CategoryController(CategoryRepository categoryRepo) {
-        this.categoryRepo = categoryRepo;
-    }
-
-    @GetMapping
-    public List<Category> list(){
-        return (List<Category>) categoryRepo.findAll();
-    }
-
-    @GetMapping("{id}")
-    public Category getOne(@PathVariable("id") Category category) {
-        return category;
-    }
-
-    @PostMapping
-    public Category create(@RequestBody Category category) { ;
-        return categoryRepo.save(category);
-
-    }
-
-    @PutMapping("{id}")
-    public Category update(@RequestBody Category newCategory, @PathVariable int id) {
-
-        return categoryRepo.findById(id)
-                .map(category -> {
-                    category.setName(newCategory.getName());
-                    return categoryRepo.save(category);
-                }).get();
-
-    }
-
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable("id") Category category) {
-        categoryRepo.delete(category);
-    }
+//    @Autowired
+//    public CategoryController(CategoryRepository categoryRepo) {
+//        this.categoryRepo = categoryRepo;
+//    }
+//
+//    @GetMapping
+//    public List<Category> list(){
+//        return (List<Category>) categoryRepo.findAll();
+//    }
+//
+//    @GetMapping("{id}")
+//    public Category getOne(@PathVariable("id") Category category) {
+//        return category;
+//    }
+//
+//    @PostMapping
+//    public Category create(@RequestBody Category category) { ;
+//        return categoryRepo.save(category);
+//
+//    }
+//
+//    @PutMapping("{id}")
+//    public Category update(@RequestBody Category newCategory, @PathVariable int id) {
+//
+//        return categoryRepo.findById(id)
+//                .map(category -> {
+//                    category.setName(newCategory.getName());
+//                    return categoryRepo.save(category);
+//                }).get();
+//
+//    }
+//
+//    @DeleteMapping("{id}")
+//    public void delete(@PathVariable("id") Category category) {
+//        categoryRepo.delete(category);
+//    }
 }

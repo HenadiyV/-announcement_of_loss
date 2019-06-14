@@ -9,7 +9,8 @@ import java.util.Set;
 01.06.2019
 17:16, unique = true
 */
-@Entity
+@Entity(name = "category")
+@Table(name = "category")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

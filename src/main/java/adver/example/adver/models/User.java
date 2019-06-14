@@ -14,7 +14,8 @@ import java.util.Set;
 27.05.2019
 16:01
 */
-@Entity // This tells Hibernate to make a table out of this class
+@Entity(name = "user")
+@Table(name = "user")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

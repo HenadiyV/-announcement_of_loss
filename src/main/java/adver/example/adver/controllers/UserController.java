@@ -1,8 +1,11 @@
 package adver.example.adver.controllers;
 
+import adver.example.adver.models.Message;
 import adver.example.adver.models.User;
+import adver.example.adver.repos.MessageRepository;
 import adver.example.adver.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +22,8 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private MessageRepository messageRepository;
     @GetMapping
     public String MyMain() {
         return "main";
@@ -64,6 +68,25 @@ public class UserController {
             listName = userRepository.findAll();
         }
         model.put("listName", listName);
+        return "main";
+    }
+    @GetMapping(path = "/list_message_to")
+    public String listUserMessageTo(@AuthenticationPrincipal User user,Map<String, Object> model) {
+        Iterable<Message> usersTo = messageRepository.findByTo_Id(user.getId());
+        model.put("usersTo", usersTo);
+
+        return "list_message_to";
+    }
+    @GetMapping(path = "/list_message_from")
+    public String listUserMessageFrom(@AuthenticationPrincipal User user,Map<String, Object> model) {
+        Iterable<Message> usersFrom = messageRepository.findByFrom_Id(user.getId());
+        model.put("usersFrom", usersFrom);
+        return "list_message_from";
+    }
+    @PostMapping(path = "/messageUser")
+    public String listUserMessageDelete(@RequestParam("userMess")int id) {
+
+        messageRepository.deleteById(id);
         return "main";
     }
 }

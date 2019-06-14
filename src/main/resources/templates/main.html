@@ -3,12 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-reboot.css">
+    <script src="/static/css/js/jquery-3.4.1.js"></script>
 </head>
 <body>
-<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
+
+
+<section class="header_sect mt-2">
+    <!-- heder -->
+    <div class="container">
+        <nav class="navbar-expand-lg navbar navbar-dark bg-primary">
+            <h1 th:inline="text">Привіт. [[${#httpServletRequest.remoteUser}]]!</h1>
+            <a class="navbar-brand" href="/">Головна</a>
+            <a class="navbar-brand" href="/user/list_message_to">Ваші повідомлення</a>
+            <a class="navbar-brand" href="/user/list_message_from">Вхідні повідомлення</a>
+            <form th:action="@{/logout}" method="post">
+            <button class="btn  bg-info" type="submit" value="Вийти">Вихід</button>
+        </form>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <div class="navbar-nav mr-auto"></div>
+
+            </div>
+        </nav>
+
+    </div>
+
+</section>
 <!--<div>-->
     <!--<form action="/user/add"  method="post" >-->
         <!--<input type="text" name="name" placeholder="Add name user"/>-->
@@ -16,28 +45,29 @@
         <!--<button type="submit">Add</button>-->
     <!--</form>-->
 <!--</div>-->
-<div>
-    <form  action="/user/filter" method="post">
-        <input type="text" name="filter" />
-        <button type="submit">Filter</button>
-    </form>
-</div>
-<h1>User list</h1>
-<div >
-    <table>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Email</th>
-        </tr>
-        <tr th:each="prod : ${listName}">
-            <td th:text="${prod.getId()}"/>
-            <td th:text="${prod.getName()}"/>
-            <td th:text="${prod.getEmail()}"/>
-        </tr>
-    </table>
-</div>
-<a href="/user/list" >List</a>
+
+<!--<div>-->
+    <!--<form  action="/user/filter" method="post">-->
+        <!--<input type="text" name="filter" />-->
+        <!--<button type="submit">Filter</button>-->
+    <!--</form>-->
+<!--</div>-->
+<!--<h1>User list</h1>-->
+<!--<div >-->
+    <!--<table>-->
+        <!--<tr>-->
+            <!--<th>Id</th>-->
+            <!--<th>Name</th>-->
+            <!--<th>Email</th>-->
+        <!--</tr>-->
+        <!--<tr th:each="prod : ${listName}">-->
+            <!--<td th:text="${prod.getId()}"/>-->
+            <!--<td th:text="${prod.getName()}"/>-->
+            <!--<td th:text="${prod.getEmail()}"/>-->
+        <!--</tr>-->
+    <!--</table>-->
+<!--</div>-->
+<!--<a href="/user/list" >List</a>-->
 
 </body>
 </html>

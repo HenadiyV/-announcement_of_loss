@@ -1,10 +1,7 @@
 package adver.example.adver.controllers;
 
 import adver.example.adver.models.*;
-import adver.example.adver.repos.AdverRepository;
-import adver.example.adver.repos.CategoryRepository;
-import adver.example.adver.repos.CityRepository;
-import adver.example.adver.repos.StatusRepository;
+import adver.example.adver.repos.*;
 import adver.example.adver.dto.CityCategoryDTO;
 import adver.example.adver.dto.MessageUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,21 +45,24 @@ public class AdverController {
     private CityRepository cityRepository;
     @Autowired
     private StatusRepository statusRepository;
-
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private MessageRepository messageRepository;
     @GetMapping
     public String myAdver() {
+
         return "advers";
     }
 
     @GetMapping("/add_advers")
-    public String myAddAdver(AddAdvers adver, @RequestParam(required = false,value="stat")Integer Id, Map<String, Object> model) {
+    public String myAddAdver(AddAdvers adver, @RequestParam(required = false, value = "stat") Integer Id, Map<String, Object> model) {
 
         Iterable<Category> categoryList = categoryRepository.findAll();
         model.put("categoryList", categoryList);
 
         Iterable<City> cityList = cityRepository.findAll();
         model.put("cityList", cityList);
-
 
 
         Iterable<Status> statusList = statusRepository.findAll();
@@ -72,31 +72,33 @@ public class AdverController {
 
     @PostMapping("/add_advers")
     public String addNewAdver(@AuthenticationPrincipal User user,
-                              @Valid AddAdvers adver, BindingResult bindingResult, Model model, @RequestParam(required = false,value="dataStop")@DateTimeFormat(pattern = "yyyy-MM-dd") Date dataStop , @RequestParam(required = false,value="file")MultipartFile file) throws ParseException, IOException {
-boolean result=true;
-        if(bindingResult.hasErrors()){
-            Map<String,String> errorMap=UtilsController.getErrors(bindingResult);
+                              @Valid AddAdvers adver, BindingResult bindingResult, Model model,
+                              @RequestParam(required = false, value = "dataStop") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dataStop,
+                              @RequestParam(required = false, value = "file") MultipartFile file) throws ParseException, IOException {
+        boolean result = true;
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errorMap = UtilsController.getErrors(bindingResult);
             model.mergeAttributes(errorMap);
 
 
-            if(adver.getCity()==null){
-                model.addAttribute("cityEr","Не вибранно місто");
+            if (adver.getCity() == null) {
+                model.addAttribute("cityEr", "Не вибранно місто");
 
             }
-            if(adver.getCategory()==null){
-                model.addAttribute("categoryEr","Не вибранно категорию.");
+            if (adver.getCategory() == null) {
+                model.addAttribute("categoryEr", "Не вибранно категорию.");
 
             }
-            if(adver.getStatus()==null){
-                model.addAttribute("statusEr","Не вказано статус.");
+            if (adver.getStatus() == null) {
+                model.addAttribute("statusEr", "Не вказано статус.");
 
             }
-            if(dataStop==null){
-                model.addAttribute("dataSotpEr","Не вказано дату завершенн дії оголошеня .");
+            if (dataStop == null) {
+                model.addAttribute("dataSotpEr", "Не вказано дату завершенн дії оголошеня .");
 
             }
-            if(adver.getTextAdver().isEmpty()){
-                model.addAttribute("textAdverEr","Не вказано текст оголошеня .");
+            if (adver.getTextAdver().isEmpty()) {
+                model.addAttribute("textAdverEr", "Не вказано текст оголошеня .");
 
             }
             Iterable<Category> categoryList = categoryRepository.findAll();
@@ -108,13 +110,13 @@ boolean result=true;
 
             Iterable<Status> statusList = statusRepository.findAll();
             model.addAttribute("statusList", statusList);
-            result=false;
+            result = false;
             return "add_advers";
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         Date startDate = dateFormat.parse(dateFormat.format(new Date()));
-        if(dataStop==null||startDate.after(dataStop)){
-            model.addAttribute("dataSotpEr","Вкажіть коректну дату");
+        if (dataStop == null || startDate.after(dataStop)) {
+            model.addAttribute("dataSotpEr", "Вкажіть коректну дату");
             Iterable<Category> categoryList = categoryRepository.findAll();
             model.addAttribute("categoryList", categoryList);
 
@@ -122,79 +124,89 @@ boolean result=true;
             model.addAttribute("cityList", cityList);
             Iterable<Status> statusList = statusRepository.findAll();
             model.addAttribute("statusList", statusList);
-            result=false;
+            result = false;
             return "add_advers";
         }
 
 
-        String photo="";
-        if(file!=null&&!file.getOriginalFilename().isEmpty()){
-            File uploadDir=new File(uploadPath);
-            if(!uploadDir.exists()){
+        String photo = "";
+        if (file != null && !file.getOriginalFilename().isEmpty()) {
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
                 uploadDir.mkdir();
             }
 
-            String uuid=UUID.randomUUID().toString();
+            String uuid = UUID.randomUUID().toString();
             String fileName = file.getOriginalFilename();
             int startIndex = fileName.replaceAll("\\\\", "/").lastIndexOf("/");
             fileName = fileName.substring(startIndex + 1);
-            photo=uuid+fileName;
+            photo = uuid + fileName;
 
 
-file.transferTo(new File(uploadPath+"/"+ photo));
+            file.transferTo(new File(uploadPath + "/" + photo));
         }
 
-if(result){Adver adv=new Adver(adver.getTextAdver(),photo,startDate,dataStop,adver.getStatus(),adver.getCategory(),user,adver.getCity());
-    adverRepository.save(adv);}
+        if (result) {
+            Adver adv = new Adver(adver.getTextAdver(), photo, startDate, dataStop, adver.getStatus(), adver.getCategory(), user, adver.getCity());
+            adverRepository.save(adv);
+
+        }
         SimpleDateFormat dateFormat1 = null;
-        dateFormat1=new SimpleDateFormat("dd MMMM YYYY");
-        String dts=dateFormat1.format(startDate);
-        String stp=dateFormat1.format(dataStop);
-        model.addAttribute("dataSart",dts);
-        model.addAttribute("user",user);
-        model.addAttribute("adver",adver);
-        model.addAttribute("dataStop",stp);
+        dateFormat1 = new SimpleDateFormat("dd MMMM YYYY");
+        String dts = dateFormat1.format(startDate);
+        String stp = dateFormat1.format(dataStop);
+        model.addAttribute("dataSart", dts);
+        model.addAttribute("user", user);
+        model.addAttribute("adver", adver);
+        model.addAttribute("dataStop", stp);
         model.addAttribute("photo", photo);
-        model.addAttribute("photoUp",uploadPath+photo);
+        model.addAttribute("photoUp", uploadPath + photo);
 
         return "advers";
     }
 
 
     @GetMapping("/found")
-    public String myFound(Map<String, Object> model) {
+    public String myFound(@AuthenticationPrincipal User user,Map<String, Object> model,@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         Iterable<Category> categoryList = categoryRepository.findAll();
         model.put("categoryList", categoryList);
 
         Iterable<City> cityList = cityRepository.findAll();
         model.put("cityList", cityList);
-        Iterable<Adver> adverList = adverRepository.findByStatus_Id(2);
-
+        Page<Adver> adverList = adverRepository.findByStatus_Id(2,pageable);
+        if(user!=null){
+            model.put("us",1);
+        }else{model.put("us",0);}
+        model.put("url","/found");
         model.put("listAdver", adverList);
 
         return "found";
     }
+
     @GetMapping("/found_city")
-    public String filtrFoundByCity(@RequestParam(required = false,value="testCity") City city,
+    public String filtrFoundByCity(@AuthenticationPrincipal User user,@RequestParam(required = false, value = "testCity") City city,
                                    Map<String, Object> model,
-                                   @PageableDefault(sort={"id"},direction = Sort.Direction.DESC) Pageable pageable
+                                   @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
         Iterable<Category> categoryList = categoryRepository.findAll();
         model.put("categoryList", categoryList);
 
         Iterable<City> cityList = cityRepository.findAll();
         model.put("cityList", cityList);
-int idCity=city.getId();
-//        Page<Adver> page=adverRepository.findByAll(pageable);
-        Page <Adver> adverList = adverRepository.findByCity_IdAndStatus_Id(city.getId(), 2, pageable);
-        model.put("listAdver", adverList);
 
+//        Page<Adver> page=adverRepository.findByAll(pageable);
+        Page<Adver> adverList = adverRepository.findByCity_IdAndStatus_Id(city.getId(), 2, pageable);
+        model.put("listAdver", adverList);
+        if(user!=null){
+            model.put("us",1);
+        }else{model.put("us",0);}
         return "found";
     }
+
     @GetMapping("/found_category")
-    public String filterFoundByCategory(@RequestParam(required = false,value="testCategory") Category category,
+    public String filterFoundByCategory(@AuthenticationPrincipal User user,@RequestParam(required = false, value = "testCategory") Category category,
                                         Map<String, Object> model,
-                                        @PageableDefault(sort={"id"},direction = Sort.Direction.DESC) Pageable pageable
+                                        @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
         Iterable<Category> categoryList = categoryRepository.findAll();
         model.put("categoryList", categoryList);
@@ -202,14 +214,17 @@ int idCity=city.getId();
         Iterable<City> cityList = cityRepository.findAll();
         model.put("cityList", cityList);
 
-        Iterable<Adver> adverList = adverRepository.findByCategory_IdAndStatus_Id(category.getId(), 2,pageable);
+        Iterable<Adver> adverList = adverRepository.findByCategory_IdAndStatus_Id(category.getId(), 2, pageable);
         model.put("listAdver", adverList);
-
+        if(user!=null){
+            model.put("us",1);
+        }else{model.put("us",0);}
         return "found";
     }
 
     @GetMapping("/lost")
-    public String myLost(CityCategoryDTO cityCategoryDTO, Map<String, Object> model) {
+    public String myLost(@AuthenticationPrincipal User user,CityCategoryDTO cityCategoryDTO, Map<String, Object> model,
+                         @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
 
         Iterable<Category> categoryList = categoryRepository.findAll();
         model.put("categoryList", categoryList);
@@ -217,58 +232,87 @@ int idCity=city.getId();
         Iterable<City> cityList = cityRepository.findAll();
         model.put("cityList", cityList);
 
-        Iterable<Adver> adverList = adverRepository.findByStatus_Id(1);
+       Page<Adver> adverList = adverRepository.findByStatus_Id(1,pageable);
+        model.put("url","/lost");
         model.put("listAdver", adverList);
-
+        if(user!=null){
+            model.put("us",1);
+        }else{model.put("us",0);}
         return "lost";
     }
 
     @GetMapping("/lost_city")
-    public String filtrLostByCity(@RequestParam(required = false,value="testCity") City city,
+    public String filtrLostByCity(@AuthenticationPrincipal User user,@RequestParam(required = false, value = "testCity") City city,
                                   Map<String, Object> model,
-                                  @PageableDefault(sort={"id"},direction = Sort.Direction.DESC) Pageable pageable) {
+                                  @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         Iterable<Category> categoryList = categoryRepository.findAll();
         model.put("categoryList", categoryList);
 
         Iterable<City> cityList = cityRepository.findAll();
         model.put("cityList", cityList);
 //        model.put("res", city.getName());
-        Page<Adver> adverList = adverRepository.findByCity_IdAndStatus_Id(city.getId(), 1,pageable);
+        Page<Adver> adverList = adverRepository.findByCity_IdAndStatus_Id(city.getId(), 1, pageable);
 
         model.put("listAdver", adverList);
-
+        if(user!=null){
+            model.put("us",1);
+        }else{model.put("us",0);}
         return "lost";
     }
 
     @GetMapping("/lost_category")
-    public String filtrLostByCategory(@RequestParam(required = false,value="testCategory") Category category,
+    public String filtrLostByCategory(@AuthenticationPrincipal User user,@RequestParam(required = false, value = "testCategory") Category category,
                                       Map<String, Object> model,
-                                      @PageableDefault(sort={"id"},direction = Sort.Direction.DESC) Pageable pageable) {
+                                      @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
 
         Iterable<Category> categoryList = categoryRepository.findAll();
         model.put("categoryList", categoryList);
 
         Iterable<City> cityList = cityRepository.findAll();
         model.put("cityList", cityList);
-        Page<Adver> adverList = adverRepository.findByCategory_IdAndStatus_Id(category.getId(),1,pageable);
+        Page<Adver> adverList = adverRepository.findByCategory_IdAndStatus_Id(category.getId(), 1, pageable);
 
         model.put("listAdver", adverList);
+        if(user!=null){
+            model.put("us",1);
+        }else{model.put("us",0);}
         return "lost";
     }
 
-@GetMapping("/message")
-public String UserMessage(){
+    @GetMapping("/message")
+    public String UserMessage(MessageUserDTO mess) {
+      //  @AuthenticationPrincipal User user,Model modelmodel.addAttribute("us",user.getId());
         return "message";
-}
-    @PostMapping ("/message")
-    public String UserMessage(@AuthenticationPrincipal User user,
-                              @Valid MessageUserDTO mess, BindingResult bindingResult, @RequestParam("user")User userM, @RequestParam("textMessage") String str, Model model){
-        if(bindingResult.hasErrors()) {
+    }
+    @PostMapping("/messageUser")
+    public String ReturnUserId(@RequestParam("user")int id, Model model)
+    {
+//mess.setIdUser(id);,MessageUserDTO mess
+        model.addAttribute("userId",id);
+
+        return "message";
+    }
+//,@Valid MessageUserDTO mess,@ResponseBody@RequestParam("user") int userId,Model model,@RequestParam("usId") User usId ,@RequestParam("textMessage") String str,
+    @PostMapping("/message")
+    public
+    String UserMessagePost(@AuthenticationPrincipal User user,
+                           @Valid MessageUserDTO mess, BindingResult bindingResult,
+                                  Model model) {
+        if (bindingResult.hasErrors()) {
             Map<String, String> errorMap = UtilsController.getErrors(bindingResult);
             model.mergeAttributes(errorMap);
-
+            model.addAttribute("userId",mess.getIdUser());
+            model.addAttribute("textMessEr","Поле повідомленя не може бути пустим.");
+            return "message";
+        }else{
+            User userTo=userRepository.findById(mess.getIdUser());
+           Message message=new Message(mess.getTextMessage(),true,user,userTo);
+messageRepository.save(message);
+ model.addAttribute("userName",userTo.getName());
         }
 
-            return "/";
+
+        model.addAttribute("userStr",mess.getTextMessage());
+        return "temp";
     }
 }

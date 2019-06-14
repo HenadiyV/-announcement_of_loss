@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/static/css/bootstrap.css">
     <link rel="stylesheet" href="/static/css/bootstrap-grid.css">
     <link rel="stylesheet" href="/static/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="/static/css/my.css">
     <script src="/static/css/js/jquery-3.4.1.js"></script>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
@@ -42,11 +43,12 @@
     </div>
 
 </section>
-<form action="" method="post">
-
+<!--<p th:text="${userId}"></p>-->
+<form action="/advers/message" method="post">
+<input hidden="hidden" name="idUser" th:value="${userId}"/>
     <div class=" col-sm-6 col-md-6 col-md-offset-1">
-        <div class="error" th:if="${textAdverEr}" th:text="${textAdverEr}">Name Error</div>
-        <textarea cols="50" rows="3" name="textAdver" placeholder="Текст оголошення"></textarea>
+        <div class="error" th:if="${textMessEr}" th:text="${textMessEr}">Name Error</div>
+        <textarea cols="50" rows="3" name="textMessage" placeholder="Текст повідомленя"></textarea>
     </div><br/>
     <div class=" col-sm-6 col-md-6 col-md-offset-1" >
 
@@ -54,5 +56,6 @@
     </div>
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 </form>
+
 </body>
 </html>

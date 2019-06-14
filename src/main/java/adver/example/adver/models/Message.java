@@ -8,17 +8,21 @@ import java.util.Objects;
 01.06.2019
 17:18
 */
-@Entity
+@Entity(name = "message")
+@Table(name = "message")
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name="textMessage", nullable = false)
+    @Column(name="textMessage")
     private String textMessage;
 
-    @ManyToOne
-    private Status status;
+    @Column(name="active")
+    private boolean activ;
+
+//    @ManyToOne
+//    private Status status;
     @ManyToOne
     private User from;
     @ManyToOne
@@ -31,6 +35,21 @@ public class Message {
     public Message() {
     }
     // getter and setter
+
+    public Message(String textMessage, boolean activ, User from, User to) {
+        this.textMessage = textMessage;
+        this.activ = activ;
+        this.from = from;
+        this.to = to;
+    }
+
+    public boolean isActiv() {
+        return activ;
+    }
+
+    public void setActiv(boolean activ) {
+        this.activ = activ;
+    }
 
     public int getId() {
 
@@ -51,13 +70,13 @@ public class Message {
         this.textMessage = textMessage;
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
+//    public Status getStatus() {
+//        return status;
+//    }
+//
+//    public void setStatus(Status status) {
+//        this.status = status;
+//    }
 
     public User getFrom() {
         return from;

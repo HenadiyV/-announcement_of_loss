@@ -9,7 +9,8 @@ import java.util.Set;
 01.06.2019
 17:16, unique = true
 */
-@Entity
+@Entity(name = "status")
+@Table(name = "status")
 public class Status {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,8 +24,8 @@ public class Status {
     }
 
 
-    @OneToMany(mappedBy="status",targetEntity=Message.class,cascade = CascadeType.ALL)
-    private Set<Message> messages;
+//    @OneToMany(mappedBy="status",targetEntity=Message.class,cascade = CascadeType.ALL)
+//    private Set<Message> messages;
 
     // getter and setter
     public int getId() {
@@ -43,13 +44,13 @@ public class Status {
         this.name = name;
     }
 
-    public Set<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(Set<Message> messages) {
-        this.messages = messages;
-    }
+//    public Set<Message> getMessages() {
+//        return messages;
+//    }
+//
+//    public void setMessages(Set<Message> messages) {
+//        this.messages = messages;
+//    }
 
     @Override
     public String toString() {

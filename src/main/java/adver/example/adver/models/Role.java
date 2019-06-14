@@ -17,7 +17,8 @@ import java.util.Set;
 28.05.2019
 
 */
-@Entity
+@Entity(name = "role")
+@Table(name = "role")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

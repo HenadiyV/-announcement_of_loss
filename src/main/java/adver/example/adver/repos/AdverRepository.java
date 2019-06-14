@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface AdverRepository extends CrudRepository<Adver, Integer> {
-    List<Adver> findByStatus_Id(int id);
+    Page<Adver> findByStatus_Id(int id,Pageable pageable);
     List<Adver> findById(int id);
     List<Adver> findByStatusName(String name);
     List<Adver> findByCity_IdAndCategory_IdAndStatus_Id(int city,int category,int id);

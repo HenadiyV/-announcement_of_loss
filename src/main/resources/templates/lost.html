@@ -17,6 +17,7 @@
 </head>
 
 <body>
+
 <section class="header_sect mt-2">
     <!-- heder -->
     <div class="container">
@@ -132,37 +133,38 @@
     </div>
     <!-- //Добавить объявление -->
 </section>
-<section>
-    <div clas="container  mt-10" >
-        <div class="row col-12"><!-- карточки -->
+<div th:insert="~{page :: pages}"></div>
+<!--<section>-->
+    <!--<div clas="container  mt-10" >-->
+        <!--<div class="row col-12">&lt;!&ndash; карточки &ndash;&gt;-->
+            <!---->
+            <!--<div class="col-sm-3 col-md-3 p-2 "th:each="adver:${listAdver}">-->
+                <!--<div class="card" style="width:auto;">-->
+                    <!--<h5 class="card-title">Увага</h5>-->
+                    <!--<span class="card-title ml-5" style="color:red " th:text="${adver.getDataStart()}"></span>-->
+                    <!--<p> В місті </p>-->
+                    <!--<span class="card-title ml-5" style="color:blue " th:text="${adver.getCity().name}"></span>-->
+                    <!--<p>Було </p>-->
+                    <!--<span class="card-title ml-5" style="color:red " th:text="${adver.getStatus().name}"></span>-->
+                    <!--<span class="card-title ml-5" style="color:blue " th:text="${adver.getCategory().name}"></span>-->
 
-            <div class="col-sm-3 col-md-3 p-2 "th:each="adver:${listAdver}">
-                <div class="card" style="width:auto;">
-                    <h5 class="card-title">Увага</h5>
-                    <span class="card-title ml-5" style="color:red " th:text="${adver.getDataStart()}"></span>
-                    <p> В місті </p>
-                    <span class="card-title ml-5" style="color:blue " th:text="${adver.getCity().name}"></span>
-                    <p>Було </p>
-                    <span class="card-title ml-5" style="color:red " th:text="${adver.getStatus().name}"></span>
-                    <span class="card-title ml-5" style="color:blue " th:text="${adver.getCategory().name}"></span>
+                    <!--<div class="card-body">-->
 
-                    <div class="card-body">
+                        <!--<p class="card-text" th:text="${adver.getTextAdver()}"></p>-->
+                        <!--<div th:if="${adver.getPhoto()}"style="width: 150px;height: 150px  ">-->
 
-                        <p class="card-text" th:text="${adver.getTextAdver()}"></p>
-                        <div th:if="${adver.getPhoto()}"style="width: 150px;height: 150px  ">
+                                <!--<img class="card-img-top"  th:src="@{'/img/'+${adver.getPhoto()}}" alt="Card image cap"/>-->
 
-                                <img class="card-img-top"  th:src="@{'/img/'+${adver.getPhoto()}}" alt="Card image cap"/>
+                        <!--</div>-->
+                        <!--<a href="/advers/message" class="btn btn-primary">Повідомити</a>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
 
-                        </div>
-                        <a href="/advers/message" class="btn btn-primary">Повідомити</a>
-                    </div>
-                </div>
-            </div>
+        <!--</div>&lt;!&ndash; //карточки &ndash;&gt;-->
 
-        </div><!-- //карточки -->
-
-    </div>
-</section>
+    <!--</div>-->
+<!--</section>-->
 <script src="/static/css/js/bootstrap.min.js"></script>
 
 <script src="/static/css/js/main.js"></script>
