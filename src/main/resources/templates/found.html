@@ -49,12 +49,12 @@
 </section>
 <!-- //heder -->
 
-<section class="header_sect mt-2">
 
+    <div class="container">
     <div class="col-lg-12 col-sm-12 col-md-12">
         <div class="row">
 
-            <div class="col-sm-4 col-md-4" >
+            <div class="col-sm-5 col-md-5" >
                 <div class="container">
 
                     <nav class="navbar-expand-lg navbar ">
@@ -65,7 +65,7 @@
 
                         <div class="collapse navbar-collapse" id="navbarColor04">
                             <div class="navbar-nav mr-auto"></div>
-                            <form class="form-inline" action="/advers/hound_city" method="get">
+                            <form class="form-inline" action="/advers/found_city" method="get">
                                 <select  class="form-control"  id="testCity" name="testCity">
                                     <option value="">Виберіть місто</option>
 
@@ -85,13 +85,13 @@
                 </div>
 
             </div>
-            <div class="col-sm-2 col-md-2"  >
+            <div class="col-sm-3 col-md-3"  >
 
-                <a type="button" class="btn btn-primary mt-2 ml-4" href="/advers/hound">Показати весь список</a>
+                <a type="button" class="btn btn-primary mt-2 ml-4" href="/advers/found">Показати весь список</a>
                     <!--<div class="container">  </div>-->
             </div>
 
-            <div class="col-sm-3 col-md-3" >
+            <div class="col-sm-4 col-md-4" >
                 <div class="container">
 
                     <nav class="navbar-expand-lg navbar ">
@@ -102,7 +102,7 @@
 
                         <div class="collapse navbar-collapse" id="navbarColor05">
                             <div class="navbar-nav mr-auto"></div>
-                            <form class="form-inline" action="/advers/hound_category" method="get">
+                            <form class="form-inline" action="/advers/found_category" method="get">
                                 <select  class="form-control" id="testCategory" name="testCategory">
                                     <option value="">Виберіть категорію</option>
                                     <option th:each="category : ${categoryList}"
@@ -122,7 +122,7 @@
         </div> <!--row-->
     </div><!--container-->
     </div>
-</section>
+    <section class="header_sect mt-2"></section>
 
 
 <div class="col-12 mt-10" style="height:auto;">
@@ -139,8 +139,12 @@
 
     </div>
 </div>
+
 <!-- //Добавить объявление -->
+<div class="container">
+    <!--<div th:insert="~{pageses :: pagesess}"></div>-->
 <div th:insert="~{page :: pages}"></div>
+</div>
 <!--<section>-->
     <!--<div clas="container  mt-10">-->
         <!--<div class="row col-12">&lt;!&ndash; карточки &ndash;&gt;-->

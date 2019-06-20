@@ -17,7 +17,7 @@ import java.util.Map;
 9:09
 */
 @Controller
-
+//@RequestMapping
 public class IndexController {
 
 

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,6 +50,7 @@ public class AdverController {
     private UserRepository userRepository;
     @Autowired
     private MessageRepository messageRepository;
+
     @GetMapping
     public String myAdver() {
 
@@ -144,7 +146,7 @@ public class AdverController {
 
 
             file.transferTo(new File(uploadPath + "/" + photo));
-        }
+        }else photo="no-photo.png";
 
         if (result) {
             Adver adv = new Adver(adver.getTextAdver(), photo, startDate, dataStop, adver.getStatus(), adver.getCategory(), user, adver.getCity());
@@ -167,24 +169,37 @@ public class AdverController {
 
 
     @GetMapping("/found")
-    public String myFound(@AuthenticationPrincipal User user,Map<String, Object> model,@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+    public String myFound(@AuthenticationPrincipal User user, Map<String, Object> model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         Iterable<Category> categoryList = categoryRepository.findAll();
         model.put("categoryList", categoryList);
 
         Iterable<City> cityList = cityRepository.findAll();
         model.put("cityList", cityList);
-        Page<Adver> adverList = adverRepository.findByStatus_Id(2,pageable);
-        if(user!=null){
-            model.put("us",1);
-        }else{model.put("us",0);}
-        model.put("url","/found");
+
+        Page<Adver> adverList = adverRepository.findByStatus_Id(2, pageable);
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (user != null) {
+            if (principal instanceof User) {
+                Role role = ((User) principal).getRole();
+                if (role.getName().equals("admin")) {
+                    model.put("us", 2);
+                }
+
+            } else
+                model.put("us", 1);
+        } else {
+            model.put("us", 0);
+        }
+        model.put("url", "/advers/found");
         model.put("listAdver", adverList);
 
+        model.put("num", adverList.getTotalElements());
+        // adverList.getTotalPages()
         return "found";
     }
 
     @GetMapping("/found_city")
-    public String filtrFoundByCity(@AuthenticationPrincipal User user,@RequestParam(required = false, value = "testCity") City city,
+    public String filtrFoundByCity(@AuthenticationPrincipal User user, @RequestParam(required = false, value = "testCity") City city,
                                    Map<String, Object> model,
                                    @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
@@ -197,14 +212,17 @@ public class AdverController {
 //        Page<Adver> page=adverRepository.findByAll(pageable);
         Page<Adver> adverList = adverRepository.findByCity_IdAndStatus_Id(city.getId(), 2, pageable);
         model.put("listAdver", adverList);
-        if(user!=null){
-            model.put("us",1);
-        }else{model.put("us",0);}
+        model.put("url", "found_city");
+        if (user != null) {
+            model.put("us", 1);
+        } else {
+            model.put("us", 0);
+        }
         return "found";
     }
 
     @GetMapping("/found_category")
-    public String filterFoundByCategory(@AuthenticationPrincipal User user,@RequestParam(required = false, value = "testCategory") Category category,
+    public String filterFoundByCategory(@AuthenticationPrincipal User user, @RequestParam(required = false, value = "testCategory") Category category,
                                         Map<String, Object> model,
                                         @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
@@ -214,16 +232,20 @@ public class AdverController {
         Iterable<City> cityList = cityRepository.findAll();
         model.put("cityList", cityList);
 
-        Iterable<Adver> adverList = adverRepository.findByCategory_IdAndStatus_Id(category.getId(), 2, pageable);
+        Page<Adver> adverList = adverRepository.findByCategory_IdAndStatus_Id(category.getId(), 2, pageable);
+        // adverList.
         model.put("listAdver", adverList);
-        if(user!=null){
-            model.put("us",1);
-        }else{model.put("us",0);}
+        model.put("url", "found_category");
+        if (user != null) {
+            model.put("us", 1);
+        } else {
+            model.put("us", 0);
+        }
         return "found";
     }
 
     @GetMapping("/lost")
-    public String myLost(@AuthenticationPrincipal User user,CityCategoryDTO cityCategoryDTO, Map<String, Object> model,
+    public String myLost(@AuthenticationPrincipal User user, CityCategoryDTO cityCategoryDTO, Map<String, Object> model,
                          @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
 
         Iterable<Category> categoryList = categoryRepository.findAll();
@@ -232,17 +254,27 @@ public class AdverController {
         Iterable<City> cityList = cityRepository.findAll();
         model.put("cityList", cityList);
 
-       Page<Adver> adverList = adverRepository.findByStatus_Id(1,pageable);
-        model.put("url","/lost");
+        Page<Adver> adverList = adverRepository.findByStatus_Id(1, pageable);
+        model.put("url", "/advers/lost");
         model.put("listAdver", adverList);
-        if(user!=null){
-            model.put("us",1);
-        }else{model.put("us",0);}
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (user != null) {
+            if (principal instanceof User) {
+                Role role = ((User) principal).getRole();
+                if (role.getName().equals("admin")) {
+                    model.put("us", 2);
+                }
+
+            } else
+                model.put("us", 1);
+        } else {
+            model.put("us", 0);
+        }
         return "lost";
     }
 
     @GetMapping("/lost_city")
-    public String filtrLostByCity(@AuthenticationPrincipal User user,@RequestParam(required = false, value = "testCity") City city,
+    public String filtrLostByCity(@AuthenticationPrincipal User user, @RequestParam(required = false, value = "testCity") City city,
                                   Map<String, Object> model,
                                   @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         Iterable<Category> categoryList = categoryRepository.findAll();
@@ -254,14 +286,16 @@ public class AdverController {
         Page<Adver> adverList = adverRepository.findByCity_IdAndStatus_Id(city.getId(), 1, pageable);
 
         model.put("listAdver", adverList);
-        if(user!=null){
-            model.put("us",1);
-        }else{model.put("us",0);}
+        if (user != null) {
+            model.put("us", 1);
+        } else {
+            model.put("us", 0);
+        }
         return "lost";
     }
 
     @GetMapping("/lost_category")
-    public String filtrLostByCategory(@AuthenticationPrincipal User user,@RequestParam(required = false, value = "testCategory") Category category,
+    public String filtrLostByCategory(@AuthenticationPrincipal User user, @RequestParam(required = false, value = "testCategory") Category category,
                                       Map<String, Object> model,
                                       @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
 
@@ -273,46 +307,59 @@ public class AdverController {
         Page<Adver> adverList = adverRepository.findByCategory_IdAndStatus_Id(category.getId(), 1, pageable);
 
         model.put("listAdver", adverList);
-        if(user!=null){
-            model.put("us",1);
-        }else{model.put("us",0);}
+        if (user != null) {
+            model.put("us", 1);
+        } else {
+            model.put("us", 0);
+        }
         return "lost";
     }
 
     @GetMapping("/message")
     public String UserMessage(MessageUserDTO mess) {
-      //  @AuthenticationPrincipal User user,Model modelmodel.addAttribute("us",user.getId());
+        //  @AuthenticationPrincipal User user,Model modelmodel.addAttribute("us",user.getId());
         return "message";
     }
+
     @PostMapping("/messageUser")
-    public String ReturnUserId(@RequestParam("user")int id, Model model)
-    {
+    public String ReturnUserId(@RequestParam("user") int id, Model model) {
 //mess.setIdUser(id);,MessageUserDTO mess
-        model.addAttribute("userId",id);
+        model.addAttribute("userId", id);
 
         return "message";
     }
-//,@Valid MessageUserDTO mess,@ResponseBody@RequestParam("user") int userId,Model model,@RequestParam("usId") User usId ,@RequestParam("textMessage") String str,
+
+    //,@Valid MessageUserDTO mess,@ResponseBody@RequestParam("user") int userId,Model model,@RequestParam("usId") User usId ,@RequestParam("textMessage") String str,
     @PostMapping("/message")
-    public
-    String UserMessagePost(@AuthenticationPrincipal User user,
-                           @Valid MessageUserDTO mess, BindingResult bindingResult,
+    public String UserMessagePost(@AuthenticationPrincipal User user,
+                                  @Valid MessageUserDTO mess, BindingResult bindingResult,
+
                                   Model model) {
         if (bindingResult.hasErrors()) {
             Map<String, String> errorMap = UtilsController.getErrors(bindingResult);
             model.mergeAttributes(errorMap);
-            model.addAttribute("userId",mess.getIdUser());
-            model.addAttribute("textMessEr","Поле повідомленя не може бути пустим.");
+            model.addAttribute("userId", mess.getIdUser());
+            model.addAttribute("textMessEr", "Поле повідомленя не може бути пустим.");
             return "message";
-        }else{
-            User userTo=userRepository.findById(mess.getIdUser());
-           Message message=new Message(mess.getTextMessage(),true,user,userTo);
-messageRepository.save(message);
- model.addAttribute("userName",userTo.getName());
+        } else {
+            User userTo = userRepository.findById(mess.getIdUser());
+            Message message = new Message(mess.getTextMessage(), true, user, userTo);
+            messageRepository.save(message);
+            model.addAttribute("userName", userTo.getName());
         }
 
 
-        model.addAttribute("userStr",mess.getTextMessage());
+        model.addAttribute("userStr", mess.getTextMessage());
         return "temp";
+    }
+
+    @PostMapping("messageDelete")
+    public String DeleteMessage(@RequestParam("url") String url, @RequestParam("messDel") Integer id,Model model) {
+
+String str=url.substring(url.indexOf("/")+1);
+        model.addAttribute("id",id);
+        model.addAttribute("url",url);
+        model.addAttribute("str",str);
+        return "redirect:"+url;
     }
 }
