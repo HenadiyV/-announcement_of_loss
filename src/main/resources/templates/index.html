@@ -41,7 +41,23 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+            <!--<div class="collapse navbar-collapse" id="navbarColor03">-->
+                <!--<ul class="navbar-nav mr-auto">-->
+                    <!--<li class="nav-item">-->
+                        <!--<a class="nav-link" href="/advers/hound">Знайденно</a>-->
+                    <!--</li>-->
+                    <!--<li class="nav-item">-->
+                        <!--<a class="nav-link" href="/advers/lost">Втрачено</a>-->
+                    <!--</li>-->
+                    <!--<li class="nav-item">-->
+                        <!--<a class="nav-link" href="#">Зворотній звязок</a>-->
+                    <!--</li>-->
+                    <!--<li class="nav-item">-->
+                        <!--<a class="nav-link" href="#">Про нас</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
 
+            <!--</div>-->
         </nav>
 
     </div>
@@ -54,34 +70,36 @@
     <div class="col-sm-12 col-md-12">
         <h3 >Ми раді вітати Вас на нашому сайті.</h3>
         <h6>На нашому ресурсі користувачі залишають повідомлення про знайденны або втраченны речі.</h6></div>
-    <div class="col-12 mt-10" style="height: auto;">
-        <!-- Добавить объявление -->
-        <div class="row">
+    <div class="container">
+        <div class="col-12 mt-10" style="height: auto;">
+            <!-- Добавить объявление -->
+            <div class="row">
 
-            <div class="col-sm-4 col-md-4  m-3">
-                <form action="/advers/add_advers"  method="get">
-                    <!--<input hidden="hidden" type="text" name="stat" value="1">-->
-                    <button class="btn btn-danger"  type="submit" href="/advers/add_advers" >Повідомити про  втрату </button>
-                </form>
+                <div class="col-sm-4 col-md-4  m-3">
+                    <form action="/advers/add_advers"  method="get">
+                        <!--<input hidden="hidden" type="text" name="stat" value="1">-->
+                        <button class="btn btn-danger"  type="submit" href="/advers/add_advers" >Повідомити про  втрату </button>
+                    </form>
+
+
+                </div>
+                <div class="col-sm-2 col-md-2 m-3 hidden-xs"></div>
+                <div class="col-sm-4 col-md-4   m-3">
+                    <form action="/advers/add_advers"  method="get">
+                        <!--<input hidden="hidden" type="text" name="stat" value="2">-->
+                        <button class="btn btn-success"  type="submit" href="/advers/add_advers" >Повідомити про знахідку </button>
+                    </form>
+                </div>
 
 
             </div>
-            <div class="col-sm-2 col-md-2 m-3 hidden-xs"></div>
-            <div class="col-sm-4 col-md-4   m-3">
-                <form action="/advers/add_advers"  method="get">
-                    <!--<input hidden="hidden" type="text" name="stat" value="2">-->
-                    <button class="btn btn-success"  type="submit" href="/advers/add_advers" >Повідомити про знахідку </button>
-                </form>
-            </div>
-
-
         </div>
     </div>
+
     <div class="col-sm-12 col-md-12">
         <h6>Сподіваємось скоритавшись допомогою відвідувачів нашого сайту Вы швидко знайдете загублене, або допоможете комусь знайти втрачене. </h6></div>
 
 </section>
-<div th:insert="~{page :: pages}"></div>
 <!--<footer class="footer"> Footer </footer>-->
 <script src="/static/css/js/main.js"></script>
 <script src="/static/css/js/bootstrap.min.js"></script>

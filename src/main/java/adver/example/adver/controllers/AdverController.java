@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -175,6 +176,10 @@ public class AdverController {
         model.put("cityList", cityList);
         Page<Adver> adverList = adverRepository.findByStatus_Id(2,pageable);
         if(user!=null){
+            if(user.getRole().getName()=="admin")
+            {
+                model.put("us",2);
+            }else
             model.put("us",1);
         }else{model.put("us",0);}
         model.put("url","/found");
@@ -235,7 +240,15 @@ public class AdverController {
        Page<Adver> adverList = adverRepository.findByStatus_Id(1,pageable);
         model.put("url","/lost");
         model.put("listAdver", adverList);
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(user!=null){
+            if (principal instanceof User) {
+                Role role = ((User) principal).getRole();
+                if (role.getName().equals("admin")){ model.put("us",2);}
+
+            }
+
+            else
             model.put("us",1);
         }else{model.put("us",0);}
         return "lost";
@@ -274,11 +287,19 @@ public class AdverController {
 
         model.put("listAdver", adverList);
         if(user!=null){
+
             model.put("us",1);
         }else{model.put("us",0);}
         return "lost";
     }
+@PostMapping("/messageDelete")
+public String AdminDeleteMessage(@RequestParam("messDel") int id, @RequestParam("url")String url){
 
+        if(id>0) {
+            messageRepository.deleteById(id);
+        }
+        return "lost";
+}
     @GetMapping("/message")
     public String UserMessage(MessageUserDTO mess) {
       //  @AuthenticationPrincipal User user,Model modelmodel.addAttribute("us",user.getId());

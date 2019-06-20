@@ -9,7 +9,7 @@
 <div th:fragment="pages">
 
     <div th:if="${url}">
-
+<!--<p th:text="${us}"></p>-->
         <section>
             <nav aria-label="Page navigation example">
                 <ul class="pagination" th:if="${listAdver.getTotalPage()>0}" th:each="pageNumber : ${pageNumbers}">
@@ -44,27 +44,37 @@
 
 
                             </div>
+                            <div th:if="${us}>1">
+                            <form action="/advers/messageDelete"  method="post">
+                                <input hidden="hidden"  th:name="messDel" th:value="${adver.getId()}"/>
+                                <input hidden="hidden"  th:name="url" th:value="${url}"/>
+                                <button class="btn btn-primary" type="submit">Видалити</button>
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+
+                            </form>
+                        </div>
                             <div th:if="${us}>0">
                             <form action="/advers/messageUser"  method="post">
                             <input hidden="hidden"  th:name="user" th:value="${adver.user.getId()}"/>
 
                             <button class="btn btn-primary" type="submit">Повідомити</button>
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-
-
-                        </form>
+                            </form>
                             </div>
                             <div th:if="${us}==0">
                                 <a href="/login" class="btn btn-primary">Залогінитись</a>
                             </div>
+
+                        </div>
                         </div>
                     </div>
 
                 </div><!-- //карточки -->
 
-            </div>
         </section>
-    </div>
 </div>
+</div>
+
 </body>
 </html>
