@@ -21,37 +21,30 @@
     <div class="container">
         <nav class="navbar-expand-lg navbar navbar-dark bg-primary">
             <a class="navbar-brand" href="/">Головна</a>
-            <a class="navbar-brand" href="/user">Особистий кабінет</a>
-            <!--<a class="navbar-brand" href="/advers/found">Знайденно</a>-->
-            <!--<a class="navbar-brand" href="/advers/add_advers">Додати оголошення</a>-->
+            <a class="navbar-brand" href="/advers/lost">Втрачено</a>
+            <a class="navbar-brand" href="/advers/found">Знайденно</a>
+            <a class="navbar-brand" href="/advers/add_advers">Додати оголошення</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarColor02">
                 <div class="navbar-nav mr-auto"></div>
+
             </div>
         </nav>
+
     </div>
+
 </section>
-<section>
-    <div clas="container  mt-10" >
-        <div class="row col-12">
-            <div class="col-sm-3 col-md-3 p-2 "th:each="mes:${usersTo}" >
-                <div class="card" style="width:auto;">
-                    <h5 class="card-title">Повідомлення</h5>
-                    <p>Від :</p>
-                    <span class="card-title ml-5" style="color:blue " th:text="${mes.getFromUser()}"></span>
-                    <p>Текст повідомлення : </p>
-                    <span class="card-title ml-5" style="color:red " th:text="${mes.getTextMessage()}"></span>
-                        <form action="/user/messageUser"  method="post">
-                            <input hidden="hidden"  th:name="userMess" th:value="${mes.getToUser()}"/>
-                            <button class="btn btn-primary" type="submit">Видалити</button>
-                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                        </form>
-            </div>
-        </div>
-        </div>
+<section class="header_sect mt-2">
+
+    <div>
+        <p> Ваше повідомленя відправленно користувачю </p>
+        <p th:text="${userTo}"></p>
+        <p> Текст повідомлення :</p>
+        <p th:text="${userMessage}"></p>
     </div>
 </section>
 </body>

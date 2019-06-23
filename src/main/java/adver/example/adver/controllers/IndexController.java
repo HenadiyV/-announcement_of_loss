@@ -14,10 +14,9 @@ import java.util.Map;
 /*
 *@autor Hennadiy Voroboiv 
 01.06.2019
-9:09
 */
 @Controller
-//@RequestMapping
+
 public class IndexController {
 
 

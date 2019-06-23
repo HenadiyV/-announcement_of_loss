@@ -1,5 +1,6 @@
 package adver.example.adver.controllers;
 
+import adver.example.adver.dto.MessageUserDTO;
 import adver.example.adver.models.Message;
 import adver.example.adver.models.User;
 import adver.example.adver.repos.MessageRepository;
@@ -15,7 +16,6 @@ import java.util.Map;
 /*
 *@autor Hennadiy Voroboiv 
 27.05.2019
-7:21
 */
 @Controller
 @RequestMapping("/user")
@@ -24,18 +24,16 @@ public class UserController {
     private UserRepository userRepository;
     @Autowired
     private MessageRepository messageRepository;
+
     @GetMapping
     public String MyMain() {
         return "main";
     }
 
-    @PostMapping(path = "/add") // Map ONLY GET Requests
+    @PostMapping(path = "/add")
     public @ResponseBody
     String addNewUser(@RequestParam String name
             , @RequestParam String email) {
-        // @ResponseBody means the returned String is the response, not a dto name
-        // @RequestParam means it is a parameter from the GET or POST request
-
         User n = new User();
         n.setName(name);
         n.setEmail(email);
@@ -70,22 +68,32 @@ public class UserController {
         model.put("listName", listName);
         return "main";
     }
+
     @GetMapping(path = "/list_message_to")
     public String listUserMessageTo(@AuthenticationPrincipal User user,Map<String, Object> model) {
         Iterable<Message> usersTo = messageRepository.findByTo_Id(user.getId());
-        model.put("usersTo", usersTo);
-
+        ArrayList<MessageUserDTO> listUserMessage=new ArrayList<>();
+        for(Message m:usersTo){
+        MessageUserDTO userMessage=new MessageUserDTO();
+        userMessage.setToUser(m.getId());
+        userMessage.setTextMessage(m.getTextMessage());
+       User us= userRepository.findById(m.getFrom().getId());
+        userMessage.setFromUser(us.getName());
+            listUserMessage.add(userMessage);
+        }
+        model.put("usersTo", listUserMessage);
         return "list_message_to";
     }
+
     @GetMapping(path = "/list_message_from")
     public String listUserMessageFrom(@AuthenticationPrincipal User user,Map<String, Object> model) {
         Iterable<Message> usersFrom = messageRepository.findByFrom_Id(user.getId());
         model.put("usersFrom", usersFrom);
         return "list_message_from";
     }
+
     @PostMapping(path = "/messageUser")
     public String listUserMessageDelete(@RequestParam("userMess")int id) {
-
         messageRepository.deleteById(id);
         return "main";
     }

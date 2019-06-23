@@ -6,17 +6,16 @@
     <title>Title</title>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
 
-    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <!--<link rel="stylesheet" href="/static/css/bootstrap.css">-->
     <link rel="stylesheet" href="/static/css/bootstrap-grid.css">
     <link rel="stylesheet" href="/static/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="/static/css/my.css">
     <script src="/static/css/js/jquery-3.4.1.js"></script>
 </head>
 <body>
-<!--nav nav-pills-->
+
 <div th:fragment="pages">
-    <!--<p th:text="${listAdver.getTotalPages()}"></p>-->
-    <!--<p th:text="${listAdver.getTotalElements()}"></p>-->
-    <!--<nav aria-label="..."> </nav>-->
+    <div  clas="container " >
     <div class="mt-3">
     <ul class=" pagination">
         <li class="page-item disabled">
@@ -33,99 +32,69 @@
         </div>
 
     </ul>
-</div>
-    <!--<div class="mt-3">(size=${listAdver.getSize()})-->
-    <!--<ul class=" pagination">-->
-        <!--<li class="page-item disabled">-->
-            <!--<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Елементів на сторінці</a>-->
-        <!--</li>-->
-        <!--<div th:each="s:${#numbers.sequence(5,50,5)}">-->
-            <!--<li th:if="${s==listAdver.getSize()}" class="page-item active" >-->
-                <!--<a href="#" th:text="${i}" class="page-link"></a>-->
-            <!--</li>-->
-            <!--<li th:unless="${s==listAdver.getSize()}" class="page-item " >-->
-                <!--<a th:href="@{${url}(page=${listAdver.getNumber()}&size=${s})}" th:text="${s}" class="page-link"></a>-->
-            <!--</li>-->
-        <!--</div>-->
-    <!--</ul>-->
-    <!--</div>-->
-    <!--<ul class="pagination">-->
-        <!--<li class="page-item disabled">-->
-            <!--<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>-->
-        <!--</li>-->
-        <!--<li class="page-item active" th:earch="p : ${listAdver}">-->
-            <!--<a class="page-link" th:href="@{/url(?page=p.getNumber()}"  tabindex="-1" ></a>-->
-        <!--</li>-->
-    <!--</ul>-->
-    <!--<div th:if="${url}"><span th:text="${p}"></span>-->
-        <!--<p th:text="${url}"></p>-->
-
-            <!--<nav aria-label="Page navigation example">-->
-                <!--<ul class="pagination" th:if="${listAdver.getTotalPage()>0}" th:each="pageNumber : ${listAdver}">-->
-                    <!--<li class="page-item">-->
-                        <!--<a class="page-link" th:href="@{/url(size=${listAdver.size}, page=${pageNumber})}"-->
-                                             <!--th:text=${pageNumber}-->
-                                             <!--th:class="${pageNumber==listAdver.number + 1} ? active"></a></li>-->
-
-                <!--</ul>-->
-            <!--</nav>-->
-    <!--</div>-->
-        <section>
-            <div clas="container  mt-10" >
-                <div class="row col-12"><!-- карточки -->
-
-                    <div class="col-sm-3 col-md-3 p-2 "th:each="adver:${listAdver}">
-                        <div class="card" style="width:auto;">
-
-                            <h5 class="card-title">Увага</h5>
-                            <span class="card-title ml-5" style="color:red " th:text="${adver.getDataStart()}"></span>
-                            <p> В місті </p>
-                            <span class="card-title ml-5" style="color:blue " th:text="${adver.getCity().name}"></span>
-                            <p>Було </p>
-                            <span class="card-title ml-5" style="color:red " th:text="${adver.getStatus().name}"></span>
-                            <span class="card-title ml-5" style="color:blue " th:text="${adver.getCategory().name}"></span>
-
-                            <div class="card-body">
-
-                                <p class="card-text" th:text="${adver.getTextAdver()}"></p>
-                                <div th:if="${adver.getPhoto()}"style="width: 150px;height: 150px  ">
-
-                                    <img class="card-img-top"  th:src="@{'/img/'+${adver.getPhoto()}}" alt="Card image cap"/>
-
-                                </div>
+    </div>
 
 
+        <div class="row col-12" >
+
+        <div th:each="adver:${listAdver}">
+
+            <div class="card m-2" >
+                        <div style="overflow: hidden; width: 100%;">
+                            <div style="width: 150px; height: 150px; object-fit: cover;">
+                                <img   th:src="@{'/img/'+${adver.getPhoto()}}" alt="Card image cap"  />
                             </div>
-                            <div th:if="${us}==2">
-                                <form action="/advers/messageDelete"  method="post">
-                                    <input hidden="hidden"  th:name="messDel" th:value="${adver.getId()}"/>
-                                    <input hidden="hidden"  th:name="url" th:value="${url}"/>
-                                    <button class="btn btn-primary" type="submit">Видалити</button>
-                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                         </div>
 
+                        <div class="card-body">
+                            <h5 class="card-title">Увага<span class=" ml-5" style="color:red " th:text="${adver.getDataStart()}"></span></h5>
+                            <p class="card-text">В місті :<br/>
+                             <span class=" ml-1" style="color:blue " th:text="${adver.getCity().name}"></span>
+                            </p>
+                            <p class="card-text">Було  <span class=" ml-5" style="color:red " th:text="${adver.getStatus().name}"></span></p>
+                            <p class="card-text"><span class=" ml-5" style="color:blue " th:text="${adver.getCategory().name}"></span></p>
+                            <p>
+                                    <button class="btn btn-primary" th:onclick="'javascript:toggle_show(\''+${adver.getId()}+'\');'">
+                                        Докладніше
+                                    </button>
+                                    <div  style=" width: 200px;">
+                                    <div th:id="${adver.getId()}" th:text="${adver.getTextAdver()}" style="display:none">
+                                    </div>
 
-                                </form>
-                            </div>
-                            <div th:if="${us} !=0">
+                                    </div>
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+
+                                <div class="m-1" th:if="${us} !=0">
                                 <form action="/advers/messageUser"  method="post">
                                     <input hidden="hidden"  th:name="user" th:value="${adver.user.getId()}"/>
-
                                     <button class="btn btn-primary" type="submit">Повідомити</button>
                                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                                 </form>
-                            </div>
+                                </div>
+
+                                <div class="m-1" th:if="${us}==2">
+                                <form action="/advers/adversDelete"  method="post">
+                                <input hidden="hidden"  th:name="messDel" th:value="${adver.getId()}"/>
+                                <input hidden="hidden"  th:name="url" th:value="${url}"/>
+                                <button class="btn btn-primary" type="submit">Видалити</button>
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                </form>
+                                </div>
+                             </div>
                             <div th:if="${us}==0">
-                                <a href="/login" class="btn btn-primary">Залогінитись</a>
+                            <a href="/login" class="btn btn-primary">Залогінитись</a>
                             </div>
-
                         </div>
-                    </div>
-                </div>
+            </div>
+        </div>
+        </div>
 
-            </div><!-- //карточки -->
-
-        </section>
     </div>
-<!--</div>-->
+
+</div>
+
 </body>
 </html>

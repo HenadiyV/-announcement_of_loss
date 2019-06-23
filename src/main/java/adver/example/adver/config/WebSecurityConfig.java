@@ -4,7 +4,6 @@ package adver.example.adver.config;
  *@autor Hennadiy Voroboiv
  *@email henadiyv@gmail.com
  *04.06.2019
-
  */
 
 import adver.example.adver.service.UserService;
@@ -30,9 +29,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/registration"
                         , "/advers/lost", "/advers/lost_city", "/advers/lost_category",
-                        "/advers/found","/advers/found_city","/advers/found_category",
-                        "/static/**","/img/**",
-                        "/advers/message","/advers/messageUser").permitAll()
+                        "/advers/found", "/advers/found_city", "/advers/found_category",
+                        "/static/**", "/img/**",
+                        "/advers/message", "/advers/messageUser").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

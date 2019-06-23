@@ -1,5 +1,6 @@
 package adver.example.adver.controllers;
 
+import adver.example.adver.dto.AddAdvers;
 import adver.example.adver.models.*;
 import adver.example.adver.repos.*;
 import adver.example.adver.dto.CityCategoryDTO;
@@ -30,7 +31,6 @@ import java.util.*;
 /*
 *@autor Hennadiy Voroboiv
 01.06.2019
-9:10
 */
 @Controller
 @RequestMapping("/advers")
@@ -129,29 +129,23 @@ public class AdverController {
             result = false;
             return "add_advers";
         }
-
-
         String photo = "";
         if (file != null && !file.getOriginalFilename().isEmpty()) {
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdir();
             }
-
             String uuid = UUID.randomUUID().toString();
             String fileName = file.getOriginalFilename();
             int startIndex = fileName.replaceAll("\\\\", "/").lastIndexOf("/");
             fileName = fileName.substring(startIndex + 1);
             photo = uuid + fileName;
-
-
             file.transferTo(new File(uploadPath + "/" + photo));
-        }else photo="no-photo.png";
+        }else photo="noimage.png";
 
         if (result) {
             Adver adv = new Adver(adver.getTextAdver(), photo, startDate, dataStop, adver.getStatus(), adver.getCategory(), user, adver.getCity());
             adverRepository.save(adv);
-
         }
         SimpleDateFormat dateFormat1 = null;
         dateFormat1 = new SimpleDateFormat("dd MMMM YYYY");
@@ -192,7 +186,9 @@ public class AdverController {
         }
         model.put("url", "/advers/found");
         model.put("listAdver", adverList);
-
+for(Adver a:adverList){
+    a.getTextAdver().length();
+}
         model.put("num", adverList.getTotalElements());
         // adverList.getTotalPages()
         return "found";
@@ -208,8 +204,6 @@ public class AdverController {
 
         Iterable<City> cityList = cityRepository.findAll();
         model.put("cityList", cityList);
-
-//        Page<Adver> page=adverRepository.findByAll(pageable);
         Page<Adver> adverList = adverRepository.findByCity_IdAndStatus_Id(city.getId(), 2, pageable);
         model.put("listAdver", adverList);
         model.put("url", "found_city");
@@ -228,12 +222,9 @@ public class AdverController {
     ) {
         Iterable<Category> categoryList = categoryRepository.findAll();
         model.put("categoryList", categoryList);
-
         Iterable<City> cityList = cityRepository.findAll();
         model.put("cityList", cityList);
-
         Page<Adver> adverList = adverRepository.findByCategory_IdAndStatus_Id(category.getId(), 2, pageable);
-        // adverList.
         model.put("listAdver", adverList);
         model.put("url", "found_category");
         if (user != null) {
@@ -264,7 +255,6 @@ public class AdverController {
                 if (role.getName().equals("admin")) {
                     model.put("us", 2);
                 }
-
             } else
                 model.put("us", 1);
         } else {
@@ -282,9 +272,7 @@ public class AdverController {
 
         Iterable<City> cityList = cityRepository.findAll();
         model.put("cityList", cityList);
-//        model.put("res", city.getName());
         Page<Adver> adverList = adverRepository.findByCity_IdAndStatus_Id(city.getId(), 1, pageable);
-
         model.put("listAdver", adverList);
         if (user != null) {
             model.put("us", 1);
@@ -298,7 +286,6 @@ public class AdverController {
     public String filtrLostByCategory(@AuthenticationPrincipal User user, @RequestParam(required = false, value = "testCategory") Category category,
                                       Map<String, Object> model,
                                       @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
-
         Iterable<Category> categoryList = categoryRepository.findAll();
         model.put("categoryList", categoryList);
 
@@ -317,19 +304,18 @@ public class AdverController {
 
     @GetMapping("/message")
     public String UserMessage(MessageUserDTO mess) {
-        //  @AuthenticationPrincipal User user,Model modelmodel.addAttribute("us",user.getId());
+
         return "message";
     }
 
     @PostMapping("/messageUser")
     public String ReturnUserId(@RequestParam("user") int id, Model model) {
-//mess.setIdUser(id);,MessageUserDTO mess
+
         model.addAttribute("userId", id);
 
         return "message";
     }
 
-    //,@Valid MessageUserDTO mess,@ResponseBody@RequestParam("user") int userId,Model model,@RequestParam("usId") User usId ,@RequestParam("textMessage") String str,
     @PostMapping("/message")
     public String UserMessagePost(@AuthenticationPrincipal User user,
                                   @Valid MessageUserDTO mess, BindingResult bindingResult,
@@ -338,28 +324,25 @@ public class AdverController {
         if (bindingResult.hasErrors()) {
             Map<String, String> errorMap = UtilsController.getErrors(bindingResult);
             model.mergeAttributes(errorMap);
-            model.addAttribute("userId", mess.getIdUser());
+            model.addAttribute("userId", mess.getToUser());
             model.addAttribute("textMessEr", "Поле повідомленя не може бути пустим.");
+            if(mess.getTextMessage().length()>100){
+                model.addAttribute("textMessEr", "Поле повідомленя не може бути більше ніж сто символів.");
+            }
             return "message";
         } else {
-            User userTo = userRepository.findById(mess.getIdUser());
+            User userTo = userRepository.findById(mess.getToUser());
             Message message = new Message(mess.getTextMessage(), true, user, userTo);
             messageRepository.save(message);
-            model.addAttribute("userName", userTo.getName());
+            model.addAttribute("userTo", userTo.getName());
         }
-
-
-        model.addAttribute("userStr", mess.getTextMessage());
-        return "temp";
+        model.addAttribute("userMessage", mess.getTextMessage());
+        return "send_message";
     }
 
-    @PostMapping("messageDelete")
-    public String DeleteMessage(@RequestParam("url") String url, @RequestParam("messDel") Integer id,Model model) {
-
-String str=url.substring(url.indexOf("/")+1);
-        model.addAttribute("id",id);
-        model.addAttribute("url",url);
-        model.addAttribute("str",str);
+    @PostMapping("adversDelete")
+    public String AdversDelete(@RequestParam("url") String url, @RequestParam("messDel") Integer id) {
+adverRepository.delete(adverRepository.findById((int)id));
         return "redirect:"+url;
     }
 }

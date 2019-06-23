@@ -39,39 +39,25 @@
 
 </section>
     <section>
-        <!--<div th:text="${usersTo}"></div>-->
-        <!---->
         <div clas="container  mt-10" >
             <div class="row col-12"><!-- карточки -->
 
                 <div class="col-sm-3 col-md-3 p-2 "th:each="mes:${usersFrom}">
                     <div class="card" style="width:auto;">
 
-                        <h5 class="card-title">Повидомлення</h5>
-
+                        <h5 class="card-title">Повідомлення</h5>
                         <!--<p> Кому : </p>-->
                         <!--<span class="card-title ml-5" style="color:blue " th:text="${mes.getName()}"></span>-->
                         <p>Текст повідомлення : </p>
                         <span class="card-title ml-5" style="color:red " th:text="${mes.getTextMessage()}"></span>
-
-
-
-
                         <form action="/user/messageUser"  method="post">
                             <input hidden="hidden"  th:name="userMess" th:value="${mes.getId()}"/>
-
                             <button class="btn btn-primary" type="submit">Видалити</button>
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-
-
                         </form>
-
-
                     </div>
                 </div>
-
-            </div><!-- //карточки -->
-
+            </div>
         </div>
 </section>
 </body>

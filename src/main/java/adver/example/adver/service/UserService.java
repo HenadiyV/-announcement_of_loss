@@ -21,24 +21,25 @@ import java.util.Collections;
 @Service
 public class UserService implements UserDetailsService {
     @Autowired
-   private UserRepository userRepository;
+    private UserRepository userRepository;
+
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         return userRepository.findByName(name);
     }
-    public  boolean addUser(User user) {
+
+    public boolean addUser(User user) {
         User userFromDb = userRepository.findByName(user.getName());
 
         if (userFromDb != null) {
             return false;
         }
         user.setRls(Collections.singleton(Rl.USER));
-Role rl=new Role();
-rl.setId(2);
-rl.setName("user");
+        Role rl = new Role();
+        rl.setId(2);
+        rl.setName("user");
         user.setRole(rl);
         userRepository.save(user);
-
         return true;
     }
 

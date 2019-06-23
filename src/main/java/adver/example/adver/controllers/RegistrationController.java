@@ -41,18 +41,13 @@ public class RegistrationController {
         if(bindingResult.hasErrors()){
 Map<String,String> errorMap=UtilsController.getErrors(bindingResult);
 model.mergeAttributes(errorMap);
-//model.addAttribute("user",user);
             return "registration";
         }
-
-   //  User userDB=userRepository.findByEmail(user.getEmail());
 if(!userService.addUser(user)) {
     model.addAttribute("nameError", "User exists");
     return "registration";
 }
-//user.setRls(Collections.singleton(Rl.USER));
-//userRepository.save(user);
-return "redirect:/login";//
+return "redirect:/login";
         }
 
 

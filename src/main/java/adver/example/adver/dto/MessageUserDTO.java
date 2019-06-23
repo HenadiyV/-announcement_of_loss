@@ -3,6 +3,7 @@ package adver.example.adver.dto;
 import adver.example.adver.models.User;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.Set;
 
 /*
  *@autor Hennadiy Voroboiv
@@ -10,18 +11,10 @@ import javax.validation.constraints.NotEmpty;
  *10.06.2019
  */
 public class MessageUserDTO {
-   // private User user;
-private int idUser;
+private int toUser;
+    private String fromUser;
     @NotEmpty(message="Не вказано текст повідомленя .")
     private  String textMessage;
-
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
 
     public String getTextMessage() {
         return textMessage;
@@ -31,11 +24,19 @@ private int idUser;
         this.textMessage = textMessage;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public int getToUser() {
+        return toUser;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setToUser(int toUser) {
+        this.toUser = toUser;
+    }
+
+    public String getFromUser() {
+        return fromUser;
+    }
+
+    public void setFromUser(String fromUser) {
+        this.fromUser = fromUser;
     }
 }

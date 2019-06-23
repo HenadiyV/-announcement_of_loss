@@ -1,4 +1,8 @@
-package adver.example.adver.models;
+package adver.example.adver.dto;
+
+import adver.example.adver.models.Category;
+import adver.example.adver.models.City;
+import adver.example.adver.models.Status;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -9,27 +13,17 @@ import javax.validation.constraints.NotNull;
  *09.06.2019
  */
 public class AddAdvers {
-    @NotNull(message="Виберіть city.")
+    @NotNull(message="Виберіть місто")
     private City city ;
-    @NotNull(message="Виберіть category.")
+    @NotNull(message="Виберіть категорію")
     private Category category ;
-    @NotNull( message="Виберіть status.")
+    @NotNull( message="Виберіть статус")
     private Status status ;
-    @NotEmpty(message="Виберіть textAdver")
+    @NotEmpty(message="Введіть текст")
     private String textAdver;
-    @NotNull( message="Виберіть місто.dataStop")
-    // @Temporal(TemporalType.DATE)
-//private String dataStop;
+
     public AddAdvers() {
     }
-
-//    public Date getDataStop() {
-//        return dataStop;
-//    }
-//
-//    public void setDataStop(Date dataStop) {
-//        this.dataStop = dataStop;
-//    }
 
     public City getCity() {
         return city;

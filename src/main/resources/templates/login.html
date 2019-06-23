@@ -32,7 +32,6 @@
                 <div class="col-10"> <input type="text" name="username"/></div>
             </div>
         </div>
-
         <div clas="col-lg-3 col-sm-3 col-md-3">
             <div class="row">
                 <div class="col-2"><label> Ваш пароль  :  </label>
@@ -40,13 +39,10 @@
                 <div class="col-10"><input type="password" name="password"/></div>
             </div>
         </div>
-
         <div clas="col-lg-3 col-sm-3 col-md-3">
             <input  type="submit" value="Вхід"/>
         </div>
-
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-
     </form>
     <p>Натисніть <a th:href="@{/registration}">сюди</a> для реєстраціі.</p>
 </div>

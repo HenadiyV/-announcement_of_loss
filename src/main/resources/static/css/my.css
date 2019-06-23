@@ -14,3 +14,21 @@ body {
 .error{
     color: red;
 }
+
+.clip {
+    white-space: nowrap; /* Запрещаем перенос строк */
+    overflow: hidden; /* Обрезаем все, что не помещается в область */
+    background: #fc0; /* Цвет фона */
+    padding: 5px; /* Поля вокруг текста */
+    text-overflow: ellipsis; /* Добавляем многоточие */
+
+}
+.clip1 {
+    width: 200px;
+    overflow: hidden;
+    /*или overflow-x: hidden - разницы нет*/
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    border: 1px solid red;
+}

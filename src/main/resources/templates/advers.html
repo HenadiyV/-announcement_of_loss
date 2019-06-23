@@ -2,26 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Advers</title>
-
+    <title>Повідомлення</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-
     <link rel="stylesheet" href="/static/css/bootstrap.css">
     <link rel="stylesheet" href="/static/css/bootstrap-grid.css">
     <link rel="stylesheet" href="/static/css/bootstrap-reboot.css">
     <script src="/static/css/js/jquery-3.4.1.js"></script>
-
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
           crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
 </head>
 <body>
+<!-- heder -->
 <section class="header_sect mt-2">
-    <!-- heder -->
     <div class="container">
         <nav class="navbar-expand-lg navbar navbar-dark bg-primary">
             <a class="navbar-brand" href="/">Головна</a>
@@ -32,52 +27,37 @@
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarColor02">
                 <div class="navbar-nav mr-auto"></div>
-
             </div>
         </nav>
-
     </div>
-
 </section>
-<p th:text="${url}"></p>
-<p th:text="${id}"></p>
-<p th:text="${str}"></p>
+
 <div th:if="${adver}">
-
-
     <section>
         <div clas="container  mt-10">
-            <div class="row col-12"><!-- карточки -->
-
-                <div class="col-10 col-sm-6 col-md-6 p-2" >
+            <div class="row "><!-- карточки -->
+                <div class="col-10 col-sm-6 col-md-6 m-5" >
                     <div class="card" style="width:auto;">
-                        <h2 class="card-title">Повідомлення</h2>
-
-                        <h4>В місті :</h4>
+                        <h4 class="card-title">Повідомлення</h4>
+                        <h6>В місті :</h6>
                         <span class="card-title ml-5" style="color:blue " th:text="${adver.getCity().name}"></span>
-
                         <span class="card-title ml-5" style="color:red " th:text="${adver.getStatus().name}"></span>
                         <span class="card-title ml-5" style="color:red " th:text="${adver.getCategory().name}"></span>
-                        <h2>Дата подачі оголошення</h2>
+                        <h4>Дата подачі оголошення</h4>
                         <span class="card-title ml-5" style="color:blue " th:text="${dataSart}"></span><br/>
-                        <h2>Дата припинення дії оголошення</h2>
+                        <h4>Дата припинення дії оголошення</h4>
                         <span class="card-title ml-5" style="color:blue " th:text="${dataStop}"></span><br/>
                         <div class="card-body">
-                            <h2>Текст оголошення :</h2>
+                            <h4>Текст оголошення :</h4>
                             <p class="card-text" th:text="${adver.getTextAdver()}"></p>
-                            <div th:if="${photo}">
+                            <div th:if="${photo}" style="width: 50%">
                                 <img class="card-img-top"  th:src="@{'/img/'+${photo}}" alt="Card image cap"/></div><br/>
-
-
                         </div>
                     </div>
                 </div>
-
             </div><!-- //карточки -->
-
         </div>
     </section>
 
