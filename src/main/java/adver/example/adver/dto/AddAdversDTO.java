@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  *@email henadiyv@gmail.com
  *09.06.2019
  */
-public class AddAdvers {
+public class AddAdversDTO {
     @NotNull(message="Виберіть місто")
     private City city ;
     @NotNull(message="Виберіть категорію")
@@ -22,7 +22,7 @@ public class AddAdvers {
     @NotEmpty(message="Введіть текст")
     private String textAdver;
 
-    public AddAdvers() {
+    public AddAdversDTO() {
     }
 
     public City getCity() {

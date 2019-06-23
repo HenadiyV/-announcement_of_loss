@@ -1,6 +1,6 @@
 package adver.example.adver.controllers;
 
-import adver.example.adver.dto.AddAdvers;
+import adver.example.adver.dto.AddAdversDTO;
 import adver.example.adver.models.*;
 import adver.example.adver.repos.*;
 import adver.example.adver.dto.CityCategoryDTO;
@@ -58,7 +58,7 @@ public class AdverController {
     }
 
     @GetMapping("/add_advers")
-    public String myAddAdver(AddAdvers adver, @RequestParam(required = false, value = "stat") Integer Id, Map<String, Object> model) {
+    public String myAddAdver(AddAdversDTO adver, @RequestParam(required = false, value = "stat") Integer Id, Map<String, Object> model) {
 
         Iterable<Category> categoryList = categoryRepository.findAll();
         model.put("categoryList", categoryList);
@@ -74,7 +74,7 @@ public class AdverController {
 
     @PostMapping("/add_advers")
     public String addNewAdver(@AuthenticationPrincipal User user,
-                              @Valid AddAdvers adver, BindingResult bindingResult, Model model,
+                              @Valid AddAdversDTO adver, BindingResult bindingResult, Model model,
                               @RequestParam(required = false, value = "dataStop") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dataStop,
                               @RequestParam(required = false, value = "file") MultipartFile file) throws ParseException, IOException {
         boolean result = true;
