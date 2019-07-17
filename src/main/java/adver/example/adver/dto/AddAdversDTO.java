@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
  *09.06.2019
  */
 public class AddAdversDTO {
+
     @NotNull(message="Виберіть місто")
     private City city ;
     @NotNull(message="Виберіть категорію")
@@ -26,6 +27,7 @@ public class AddAdversDTO {
     }
 
     public City getCity() {
+
         return city;
     }
 

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="/static/css/js/my_js.js"></script>
+    <style>
+        .modal-header, h4, .close {
+            background-color: #5cb85c;
+            color:white !important;
+            text-align: center;
+            font-size: 30px;
+        }
+        .modal-footer {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+<div th:fragment="modal">
+<div class="container">
+    <div class="container">
+        <!--<h2>Modal Login Example</h2>-->
+        <!-- Trigger the modal with a button -->
+        <!--<button type="button" class="btn btn-default btn-lg" id="myBtn" th:text="#{lang.btn.login}">Login</button>-->
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style="padding:35px 50px;">
+                        <h4 th:text="#{lang.btn.login}"><span class="glyphicon glyphicon-lock"></span> Login</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    </div>
+                    <div class="modal-body" style="padding:40px 50px;">
+                        <form th:action="@{/login}"  method="post"  >
+                            <div class="form-group">
+                                <!--<label for="usrname"> </label>-->
+                                <div th:text="#{lang.your.name}"><span class="glyphicon glyphicon-user"></span>Username</div>
+                                <input type="text" class="form-control" id="username" name="username" th:placeholder="#{lang.your.name}">
+                            </div>
+                            <div class="form-group">
+                                <!--<label for="psw"></label>-->
+                                <div th:text="#{lang.your.password}"><span class="glyphicon glyphicon-eye-open"></span> Password</div>
+                                <input type="password" class="form-control" id="password" name="password" th:placeholder="#{lang.your.password}">
+                            </div>
+                            <!--<div class="checkbox">-->
+                                <!--<label><input type="checkbox" value="" checked>Remember me</label>-->
+                            <!--</div>-->
+                            <!--<input type="text" name="url" th:value="${url}"/>-->
+                            <button  type="submit" class="btn btn-success btn-block" th:text="#{lang.btn.login}"><span class="glyphicon glyphicon-off"></span> Login</button>
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                        <p>Not a member? <a href="#">Sign Up</a></p>
+                        <p>Forgot <a href="#">Password?</a></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+<script>
+    // $(document).ready(function(){
+    //     $("#myBtn").click(function(){
+    //         $("#myModal").modal();
+    //     });
+    // });
+</script>
+
+</body>
+</html>
+<!--<h2>Modal Login Example</h2>-->
+<!--&lt;!&ndash; Trigger the modal with a button &ndash;&gt;-->
+<!--<button type="button" class="btn btn-default btn-lg" id="myBtn">Login</button>-->
+
+<!--&lt;!&ndash; Modal &ndash;&gt;-->
+<!--<div class="modal fade" id="myModal" role="dialog">-->
+<!--<div class="modal-dialog">-->
+
+<!--&lt;!&ndash; Modal content&ndash;&gt;-->
+<!--<div class="modal-content">-->
+<!--<div class="modal-header" style="padding:35px 50px;">-->
+<!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+<!--<h4><span class="glyphicon glyphicon-lock"></span> Login</h4>-->
+<!--</div>-->
+<!--<div class="modal-body" style="padding:40px 50px;">-->
+<!--<form role="form">-->
+<!--<div class="form-group">-->
+<!--<label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>-->
+<!--<input type="text" class="form-control" id="usrname" placeholder="Enter email">-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>-->
+<!--<input type="text" class="form-control" id="psw" placeholder="Enter password">-->
+<!--</div>-->
+<!--<div class="checkbox">-->
+<!--<label><input type="checkbox" value="" checked>Remember me</label>-->
+<!--</div>-->
+<!--<button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>-->
+<!--</form>-->
+<!--</div>-->
+<!--<div class="modal-footer">-->
+<!--<button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>-->
+<!--<p>Not a member? <a href="#">Sign Up</a></p>-->
+<!--<p>Forgot <a href="#">Password?</a></p>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--</div>-->
+<!--</div>-->
+<!--====================-->
+
+<!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+    <!--<div class="modal-dialog" role="document">-->
+        <!--<div class="modal-content">-->
+            <!--<div class="modal-header">-->
+                <!--<h5 class="modal-title" id="exampleModalLabel">New message</h5>-->
+                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+                    <!--<span aria-hidden="true">&times;</span>-->
+                <!--</button>-->
+            <!--</div>-->
+            <!--<div class="modal-body">-->
+                <!--<form>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="recipient-name" class="col-form-label">Recipient:</label>-->
+                        <!--<input type="text" class="form-control" id="recipient-name">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="message-text" class="col-form-label">Message:</label>-->
+                        <!--<textarea class="form-control" id="message-text"></textarea>-->
+                    <!--</div>-->
+                <!--</form>-->
+            <!--</div>-->
+            <!--<div class="modal-footer">-->
+                <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+                <!--<button type="button" class="btn btn-primary">Send message</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->

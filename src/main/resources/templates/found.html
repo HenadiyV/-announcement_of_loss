@@ -6,107 +6,117 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Знайдено</title>
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-grid.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-reboot.css">
-    <script src="/static/css/js/jquery-3.4.1.js"></script>
+    <title th:text="#{lang.found}">Знайдено</title>
+    <div th:insert="~{res :: resurs}"></div>
+    <link rel="stylesheet" href="/static/css/my.css">
+    <!--<link rel="stylesheet" href="/static/css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="/static/css/bootstrap.css">-->
+    <!--<link rel="stylesheet" href="/static/css/bootstrap-grid.css">-->
+    <!--<link rel="stylesheet" href="/static/css/bootstrap-reboot.css">-->
+    <style>
+        .modal-header, h4, .close {
+            background-color: #5cb85c;
+            color:white !important;
+            text-align: center;
+            font-size: 30px;
+        }
+        .modal-footer {
+            background-color: #f9f9f9;
+        }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script type="text/javascript">
         function toggle_show(id) {
             document.getElementById(id).style.display = document.getElementById(id).style.display == 'none' ? 'block' : 'none';
         }
+        function myModal() {
+            $("#myModal").modal();
+        }
     </script>
 </head>
 <body>
-<section class="header_sect mt-2">
-    <!-- heder -->
-    <div class="container">
-        <nav class="navbar-expand-lg navbar navbar-dark bg-primary">
-            <a class="navbar-brand" href="/">Головна</a>
-            <a class="navbar-brand" href="/advers/lost">Втрачено</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </nav>
-    </div>
-</section>
 
-    <div class="container">
-    <div class="col-lg-12 col-sm-12 col-md-12">
-        <div class="row">
-            <div class="col-sm-5 col-md-5" >
-
-                    <nav class="navbar-expand-lg navbar ">
-                        <button class="navbar-toggler bg-primary" type="button" data-toggle="collapse" data-target="#navbarColor04" aria-controls="navbarColor02"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-
-                        <div class="collapse navbar-collapse" id="navbarColor04">
-                            <div class="navbar-nav mr-auto"></div>
-                            <form class="form-inline" action="/advers/found_city" method="get">
-                                <select  class="form-control"  id="testCity" name="testCity">
-                                    <option value="">Виберіть місто</option>
-                                    <option  th:each="city : ${cityList}"
-                                             th:value="${city.id}"
-                                             th:text="${city.name}">
-                                    </option>
-                                </select>
-                                <button class="btn btn-outline-light my-2 my-sm-0 bg-primary" type="submit">Пошук</button>
-                            </form>
-                        </div>
-                    </nav>
-
-            </div>
-            <div class="col-sm-3 col-md-3"  >
-                <a type="button" class="btn btn-primary mt-2 ml-4" href="/advers/found">Показати весь список</a>
-            </div>
-            <div class="col-sm-4 col-md-4" >
-
-                    <nav class="navbar-expand-lg navbar ">
-                        <button class="navbar-toggler bg-primary" type="button" data-toggle="collapse" data-target="#navbarColor05" aria-controls="navbarColor02"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarColor05">
-                            <div class="navbar-nav mr-auto"></div>
-                            <form class="form-inline" action="/advers/found_category" method="get">
-                                <select  class="form-control" id="testCategory" name="testCategory">
-                                    <option value="">Виберіть категорію</option>
-                                    <option th:each="category : ${categoryList}"
-                                            th:value="${category.id}"
-                                            th:text="${category.name}">
-                                    </option>
-                                </select>
-                                <button class="btn btn-outline-light my-2 my-sm-0 bg-primary" type="submit">Пошук</button>
-                            </form>
-                        </div>
-                    </nav>
-            </div>
-        </div> <!--row-->
-    </div><!--container-->
-    </div>
-
-<div class="col-12 mt-10" style="height:auto;">
-    <!-- Добавить объявление -->
-    <div class="row">
-        <div class="col-4 m-2">
-
-        </div>
-        <div class="col-sm-6 col-md-6 m-2">
-            <a type="button" class="btn btn-info" href="/advers/add_advers">Повідомити про знахідку</a>
-        </div>
-    </div>
+<div class="container">
+    <div th:insert="~{hed :: heders}"></div>
 </div>
+<div class="container">
+    <div th:insert="~{menu_lost_found.html :: m_lost_found}"></div>
+</div>
+<div th:insert="~{modal_login::modal}"></div>
 
 <div class="container">
 <div th:insert="~{page :: pages}"></div>
 </div>
+<!--<script>-->
+    <!--$(document).ready(function(){-->
+        <!--$("#myBtn1").click(function(){-->
+            <!--$("#myModal1").modal();-->
+        <!--});-->
+    <!--});-->
+<!--</script>-->
 <script src="/static/css/js/bootstrap.min.js"></script>
 
 <script src="/static/css/js/main.js"></script>
 </body>
 
 </html>
+
+<!--<section>-->
+<!--<div class="container">-->
+<!--&lt;!&ndash;<h2>Modal Login Example</h2>&ndash;&gt;-->
+<!--&lt;!&ndash; Trigger the modal with a button &ndash;&gt;-->
+<!--<button type="button" class="btn btn-default btn-lg" id="myBtn" th:text="#{lang.btn.login}">Login</button>-->
+
+<!--&lt;!&ndash; Modal &ndash;&gt;-->
+<!--<div class="modal fade" id="myModal" role="dialog">-->
+<!--<div class="modal-dialog">-->
+
+<!--&lt;!&ndash; Modal content&ndash;&gt;-->
+<!--<div class="modal-content">-->
+<!--<div class="modal-header" style="padding:35px 50px;">-->
+<!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+<!--<h4 th:text="#{lang.btn.login}"><span class="glyphicon glyphicon-lock"></span> Login</h4>-->
+<!--</div>-->
+<!--<div class="modal-body" style="padding:40px 50px;">-->
+<!--<form role="form">-->
+<!--<div class="form-group">-->
+<!--&lt;!&ndash;<label for="usrname"> </label>&ndash;&gt;-->
+<!--<div th:text="#{lang.your.name}"><span class="glyphicon glyphicon-user"></span>Username</div>-->
+<!--<input type="text" class="form-control" id="usrname" th:placeholder="#{lang.your.name}">-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--&lt;!&ndash;<label for="psw"></label>&ndash;&gt;-->
+<!--<div th:text="#{lang.your.password}"><span class="glyphicon glyphicon-eye-open"></span> Password</div>-->
+<!--<input type="password" class="form-control" id="psw" th:placeholder="#{lang.your.password}">-->
+<!--</div>-->
+<!--<div class="checkbox">-->
+<!--<label><input type="checkbox" value="" checked>Remember me</label>-->
+<!--</div>-->
+<!--<button type="submit" class="btn btn-success btn-block" th:text="#{lang.btn.login}"><span class="glyphicon glyphicon-off"></span> Login</button>-->
+<!--</form>-->
+<!--</div>-->
+<!--<div class="modal-footer">-->
+<!--<button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>-->
+<!--<p>Not a member? <a href="#">Sign Up</a></p>-->
+<!--<p>Forgot <a href="#">Password?</a></p>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</section>-->
+
+
+<!--<div class="col-12 mt-10" style="height:auto;">-->
+<!--&lt;!&ndash; Добавить объявление &ndash;&gt;-->
+<!--<div class="row">-->
+<!--<div class="col-4 m-2">-->
+
+<!--</div>-->
+<!--<div class="col-sm-6 col-md-6 m-2">-->
+<!--<a type="button" class="btn btn-info" href="/advers/add_advers" th:text="#{lang.btn.found}">Повідомити про знахідку</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->

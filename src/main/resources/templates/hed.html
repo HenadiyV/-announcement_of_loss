@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div th:fragment="heders">
+    <section class="header_sect mt-1">
+        <div class="container">
+            <nav class="navbar-expand-lg navbar navbar-dark bg-primary">
+                <a class="navbar-brand" href="/" th:text="#{lang.index}">Головна</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarColor02">
+                    <ul class="navbar-nav mr-auto">
+
+                        <li class="nav-item" th:if="${found}">
+                            <a class="navbar-brand" href="/advers/found" th:text="#{lang.found}">Знайденно</a>
+                            <!--<a class="navbar-brand" href="/user" th:text="#{lang.personal.office}" >Особистий кабінет</a>-->
+                        </li>
+
+
+                        <li class="nav-item" th:if="${lost}">
+                            <a class="navbar-brand" href="/advers/lost" th:text="#{lang.lost}">Втрачено</a>
+                            <!--<a class="navbar-brand" href="/user" th:text="#{lang.personal.office}" >Особистий кабінет</a>-->
+                        </li>
+
+
+                            <li class="nav-item" th:if="${index}">
+                            <a class="navbar-brand" href="/advers/found" th:text="#{lang.found}">Знайденно</a>
+                                <a class="navbar-brand" href="/advers/lost" th:text="#{lang.lost}">Втрачено</a>
+                                <a class="navbar-brand" href="/user" th:text="#{lang.personal.office}" >Особистий кабінет</a>
+                            </li>
+                        <li class="nav-item" th:if="${office}">
+                            <a class="navbar-brand" href="/user" th:text="#{lang.personal.office}" >Особистий кабінет</a>
+                        </li>
+
+                        <li th:if="${lost}">
+                            <form action="/advers/add_advers" method="get">
+                                <input hidden="hidden" name="status" value="2"/>
+                                <button class="btn btn-success" type="submit"  th:text="#{lang.btn.found}"/>
+                                <!--<a type="button" class="btn btn-danger" href="/advers/add_advers?id=1" th:text="#{lang.btn.found}">Повідомити про втрату</a>-->
+                            </form>
+                        </li>
+                        <li th:if="${found}">
+
+                            <form action="/advers/add_advers" method="get">
+                                <input hidden="hidden" name="status" value="1"/>
+                                <button class="btn btn-danger" type="submit"  th:text="#{lang.btn.lost}"/>
+                                <!--<a type="button" class="btn btn-danger" href="/advers/add_advers?id=2" th:text="#{lang.btn.lost}">Повідомити про втрату</a></div>-->
+                            </form>
+                        </li>
+                        <!--<li class="nav-item">-->
+                            <!--<a class="navbar-brand" href="/test" >test</a>-->
+                        <!--</li>-->
+                    </ul>
+                    <div th:if="${index}">
+                    <a class="navbar-brand" href="#en" th:href="@{?locale=en}">English<img src="/img/United-States.png"></img></a>
+                    <a class="navbar-brand" href="#ru" th:href="@{?locale=ru}">Русский<img src="/img/Russia.png"></img></a>
+                    <a class="navbar-brand" href="#ru" th:href="@{?locale=ua}">Україньська<img src="/img/Ukraine.png"></img></a></div>
+
+                </div>
+
+
+            </nav>
+
+        </div>
+
+    </section>
+</div>
+</body>
+</html>

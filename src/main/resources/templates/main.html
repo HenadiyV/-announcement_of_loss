@@ -11,27 +11,99 @@
     <script src="/static/css/js/jquery-3.4.1.js"></script>
 </head>
 <body>
-
+<div class="container">
+    <div th:insert="~{hed :: heders}"></div>
+</div>
 <!-- heder -->
-<section class="header_sect mt-2">
-    <div class="container">
-        <nav class="navbar-expand-lg navbar navbar-dark bg-primary">
-            <h1 th:inline="text">Привіт. [[${#httpServletRequest.remoteUser}]]!</h1>
-            <a class="navbar-brand" href="/">Головна</a>
-            <a class="navbar-brand" href="/user/list_message_to">Вхідні повідомлення</a>
-            <a class="navbar-brand" href="/user/list_message_from">Ваші повідомлення</a>
-            <form th:action="@{/logout}" method="post">
-            <button class="btn  bg-info" type="submit" value="Вийти">Вихід</button>
-        </form>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarColor02">
-                <div class="navbar-nav mr-auto"></div>
-            </div>
-        </nav>
+<!--<section class="header_sect mt-2">-->
+    <!--<div class="container">-->
+        <!--<nav class="navbar-expand-lg navbar navbar-dark bg-primary">-->
+
+            <!--<a class="navbar-brand" href="/" th:text="#{lang.index}">Головна</a>-->
+            <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">-->
+                <!--<span class="navbar-toggler-icon"></span>-->
+            <!--</button>-->
+            <!--<div class="collapse navbar-collapse" id="navbarColor02">-->
+                <!--<ul class="navbar-nav mr-auto">-->
+                    <!--<li class="nav-item">-->
+
+                    <!--</li>-->
+
+                    <!--<li class="nav-item">-->
+
+                    <!--</li>-->
+
+                    <!--<li class="nav-item">-->
+                       <!---->
+                    <!--</li>-->
+
+
+                <!--</ul>-->
+
+            <!--</div>-->
+        <!--</nav>-->
+    <!--</div>-->
+<!--</section>-->
+<section >
+<div class="container  mt-1">
+    <div class="row">
+        <div class="col-sm-2 col-md-2  hidden-xs">
+        <h2  th:text="#{lang.hello}">Привіт. !</h2></div>
+        <div class="col-sm-2 col-md-2 ml-1 hidden-xs">
+        <h2 th:inline="text"> [[${#httpServletRequest.remoteUser}]]</h2></div>
+        <!--<div class="col-sm-2 col-md-2 ml-3 hidden-xs">-->
+        <!--<form action="/user/list_message" method="get">-->
+            <!--<input hidden="hidden" name="message_status" value="from"/>-->
+            <!--&lt;!&ndash;<a class="navbar-brand" href="/user/list_message_to" th:text="#{lang.incoming.messages}">Вхідні повідомлення</a>&ndash;&gt;-->
+            <!--<button type="submit" class="btn  btn-success" th:text="#{lang.your.messages}"></button>-->
+        <!--</form></div>-->
+        <!--<div class="col-sm-2 col-md-2  hidden-xs">-->
+        <!--<form action="/user/list_message" method="get">-->
+            <!--<input hidden="hidden" name="message_status" value="to"/>-->
+            <!--<button type="submit" class="btn  btn-success ml-5" th:text="#{lang.incoming.messages}"></button>-->
+            <!--&lt;!&ndash;<a class="navbar-brand" href="/user/list_message_from" th:text="#{lang.your.messages}">Ваші повідомлення</a>&ndash;&gt;-->
+        <!--</form></div>-->
+        <!--<div class="col-sm-2 col-md-2  hidden-xs">-->
+        <!--<form th:action="@{/logout}" method="post">-->
+            <!--<button class="btn  btn-success ml-5" type="submit" th:text="#{lang.sing.out}">Вихід</button>-->
+        <!--</form></div>-->
+    <!--</div>-->
+<!--</div>-->
+</section>
+<section>
+    <div class="card text-center">
+        <div class="card-header">
+            <ul class="nav nav-pills card-header-pills">
+                <li class="nav-item">
+                    <form action="/user/list_message" method="get">
+                    <input hidden="hidden" name="message_status" value="from"/>
+                    <!--<a class="navbar-brand" href="/user/list_message_to" th:text="#{lang.incoming.messages}">Вхідні повідомлення</a>-->
+                    <button type="submit" class="btn  btn-success" th:text="#{lang.your.messages}"></button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form action="/user/list_message" method="get">
+                        <input hidden="hidden" name="message_status" value="to"/>
+                        <button type="submit" class="btn  btn-success ml-5" th:text="#{lang.incoming.messages}"></button>
+                        <!--<a class="navbar-brand" href="/user/list_message_from" th:text="#{lang.your.messages}">Ваші повідомлення</a>-->
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form th:action="@{/logout}" method="post">
+                        <button class="btn  btn-success ml-5" type="submit" th:text="#{lang.sing.out}">Вихід</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        <!--<div class="card-body">-->
+            <!--<h5 class="card-title">Специальный заголовок</h5>-->
+            <!--<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
+            <!--<a href="#" class="btn btn-primary">Переход куда-нибудь</a>-->
+        <!--</div>-->
     </div>
 </section>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -7,6 +7,7 @@ import adver.example.adver.repos.MessageRepository;
 import adver.example.adver.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,9 +27,17 @@ public class UserController {
     private MessageRepository messageRepository;
 
     @GetMapping
-    public String MyMain() {
+    public String myMain() {
         return "main";
     }
+//    @GetMapping
+//    public String guest() {
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        if(principal instanceof User){
+//            return "main";
+//        }else
+//        return "guest";
+//    }
 
     @PostMapping(path = "/add")
     public @ResponseBody
@@ -68,7 +77,30 @@ public class UserController {
         model.put("listName", listName);
         return "main";
     }
-
+    @GetMapping(path = "/list_message")
+    public String listMessage(@AuthenticationPrincipal User user,@RequestParam("message_status")String message_status, Map<String, Object> model){
+        Iterable<Message> usersTo = messageRepository.findByTo_Id(user.getId());
+        if(message_status.equals("to")){
+        ArrayList<MessageUserDTO> listUserMessage=new ArrayList<>();
+        for(Message m:usersTo){
+            MessageUserDTO userMessage=new MessageUserDTO();
+            userMessage.setToUser(m.getId());
+            userMessage.setTextMessage(m.getTextMessage());
+            User us= userRepository.findById(m.getFrom().getId());
+            userMessage.setFromUser(us.getName());
+            listUserMessage.add(userMessage);
+            model.put("usersTo", listUserMessage);
+        }
+        }
+        if(message_status.equals("from")){
+            Iterable<Message> usersFrom = messageRepository.findByFrom_Id(user.getId());
+            model.put("usersTo", usersFrom);
+        }
+        model.put("found",true);
+        model.put("lost",true);
+        model.put("office",true);
+        return "list_message_to";
+    }
     @GetMapping(path = "/list_message_to")
     public String listUserMessageTo(@AuthenticationPrincipal User user,Map<String, Object> model) {
         Iterable<Message> usersTo = messageRepository.findByTo_Id(user.getId());

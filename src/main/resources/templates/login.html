@@ -13,13 +13,15 @@
     <script src="/static/css/js/jquery-3.4.1.js"></script>
 </head>
 <body>
+
 <div class="container col-lg-10 col-sm-10 col-md-10">
-    <div class="error" th:if="${param.error}">
-        Невірно вказане імя або пароль.
+    <div class="error" th:if="${param.error}" >
+       <p th:text="#{lang.login.error}">Невірно вказане імя або пароль.</p>
     </div>
-    <div th:if="${param.logout}">
-       Ви вийшли з свого профілю.
-        <a href="/">Головна</a>
+    <div th:if="${param.logout}" >
+        <p th:text="#{lang.out.profile}">
+       Ви вийшли з свого профілю.</p>
+        <a href="/" th:href="@{/}" th:text="#{lang.index}">Головна</a>
     </div>
 </div>
 <div class="container col-lg-8 col-sm-12 col-md-12 p-5">
@@ -27,24 +29,24 @@
 
         <div clas="col-lg-3 col-sm-3 col-md-3">
             <div class="row">
-                <div class="col-2"><label > Ваше имя :  </label>
+                <div class="col-2" th:text="#{lang.your.name}"> Ваше имя :
                 </div>
                 <div class="col-10"> <input type="text" name="username"/></div>
             </div>
         </div>
         <div clas="col-lg-3 col-sm-3 col-md-3">
             <div class="row">
-                <div class="col-2"><label> Ваш пароль  :  </label>
+                <div class="col-2"><label th:text="#{lang.your.password}"> Ваш пароль  :  </label>
                 </div>
                 <div class="col-10"><input type="password" name="password"/></div>
             </div>
         </div>
         <div clas="col-lg-3 col-sm-3 col-md-3">
-            <input  type="submit" value="Вхід"/>
+            <input  type="submit" th:value="#{lang.sing.in}"/>
         </div>
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     </form>
-    <p>Натисніть <a th:href="@{/registration}">сюди</a> для реєстраціі.</p>
+    <div ><span th:text="#{lang.your.registration}">Натисніть</span> <a href="/registration" th:href="@{/registration}" th:text="#{lang.your.registration1}">сюди</a><span th:text="#{lang.your.registration2}">для реєстраціі.</span></div>
 </div>
 
 </body>

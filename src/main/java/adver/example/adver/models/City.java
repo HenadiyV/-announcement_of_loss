@@ -24,6 +24,10 @@ public class City {
     public City() {
     }
 
+    public City(String name) {
+        this.name = name;
+    }
+
     @OneToMany(mappedBy="city",targetEntity=Adver.class,cascade = CascadeType.ALL)
     private Set<Adver> advers;
 

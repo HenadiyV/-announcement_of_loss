@@ -6,8 +6,11 @@ import adver.example.adver.repos.AdverRepository;
 import adver.example.adver.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
@@ -21,9 +24,18 @@ public class IndexController {
 
 
     @GetMapping("/")
-    public String MyIndex()
+    public String MyIndex(Model model)
     {
+        boolean index=true;
+        model.addAttribute("index",index);
         return "index";
     }
+
+//    @GetMapping("/Gologin")
+//    public String Gologin()
+//    {
+//
+//        return "Gologin";
+//    }
 
 }
